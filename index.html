@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Portfolio | Mateo Giuffra</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <nav>
-        <div class="nav-logo">
-            <a href="#">
-                <img src="/images/logo.svg">
-            </a>
-        </div>
-
-        <ul class="nav-links">
-            <li class="link"><a href="#">About</a></li>
-            <li class="link"><a href="#">Stack</a></li>
-            <li class="link"><a href="#">Projects</a></li>
-            <li class="link"><a href="#ContactMe">Contact Me</a></li>
-        </ul>
-        <a class="btn" href="https://github.com/MateoGiuffra" target="_blank" rel="noreferer">My GitHub</a>
-    </nav>
-    <header class="container">
-        <section class="content">
-            <span class="blur"></span>
-            <span class="blur"></span>
-            <!-- <h4></h4>   -->
-            <h1>Hi, I'm <span>Mateo</span>, FullStack Developer</h1>
-            <p>Advanced Programming Student with Experience in FullStack Development using the Spring Framework for Java and React for JavaScript.</p>
-            <p>Reactive Programming and Data Bases Knowledge.</p>
-            <button class="btn">Last Projects</button>
-            <div class="image">
-                <!-- <img src="/images/image2.png" alt=""> -->
+    <div class="background">
+        <div class="curve"></div>
+        <header class="main-header">
+            <ul class="nav">
+                <li>
+                    <a href="#mateo-giuffra">
+                        <p id="my-name">Mateo Giuffra</p>
+                    </a>
+                </li>
+                <li>
+                    <ul class="nav-list">
+                        <li><a href="#technologies">Technologies</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <div class="app-container">
+            <div class="app-wrapper">
+                <section id="mateo-giuffra" class="section-app">
+                    <div class="info-container">
+                        <h1>Hi, I'am Web Full Stack Developer</h1>
+                        <p class="paragraph">
+                            University programming student,
+                            Spring Boot and React developer with a passion for learning and exploring new technologies.
+                            <br>
+                            I am a proactive person who enjoys working in a team and is always looking for new
+                            challenges.
+                        </p>
+                        <div>
+                            <button class="button">Contact Me</button>
+                            <button class="button white">Download Resume</button>
+                        </div>
+                        <div class="dots"></div>
+                    </div>
+                </section>
+                <section id="tecnologias" class="section-app"></section>
+                <section id="proyectos" class="section-app"></section>
+                <section id="contactame" class="section-app"></section>
             </div>
-        </section>
-
-    </header>
-    <section id="ContactMe">
-        <footer>
-            matteogiuffrah40@gmail.com
-        </footer>
-    </section>
+        </div>
+    </div>
 </body>
-</html>
 
-<!-- 
-IDEAS:
-Seccion de PROYECTOS: Divida en dos, los ultimos hechos y el resto.
--->
+</html>
