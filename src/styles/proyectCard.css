@@ -1,0 +1,118 @@
+.proyect-card-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 7; 
+    max-width: 500px;
+    perspective: 1000px;
+}
+
+@media (max-width: 1000px) {
+    .proyect-card-wrapper {
+        max-width: 100%;
+        aspect-ratio: 3 / 7; 
+    }
+}
+
+.proyect-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+}
+
+
+
+.proyect-card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.proyect-card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-color: #1d2030;
+    border-radius: 10px;
+    border: 1px solid #585eaf42;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    overflow: hidden;
+}
+
+.proyect-card-front {
+    z-index: 2;
+}
+
+.proyect-card-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+.proyect-card-img {
+    width: 100%;
+    object-fit: scale-down;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+}
+
+.proyect-card-img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s;
+}
+
+.proyect-card-title {
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.proyect-card-technologies-container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.proyect-card-technologies {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.proyect-card-technologies-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    padding: 8px 16px;
+    background-color: rgb(238, 238, 238);
+    border-radius: 24px;
+    border: none;
+    color: #000000;
+    box-shadow: inset 1px 0px #84868a, 0px 1px #84868a;
+}
+
+.proyect-card-button-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+}
+
+.proyect-card-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: white;
+    padding: 10px;
+    max-height: 80%;
+    text-align: start;
+}

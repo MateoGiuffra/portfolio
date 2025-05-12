@@ -1,0 +1,28 @@
+.general-icon{
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid #0516f842;
+}
+
+.general-icon.cien{
+    width:  36px;
+    height: 36px;
+}
+
+.anchor-icon{
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     border-radius: 50%;
+}
+.anchor-icon:hover{
+    scale: 1.1;
+    transition: all 0.2s ease-in-out;
+}

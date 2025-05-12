@@ -1,0 +1,17 @@
+.section-app{
+    width: 100%;
+    /* border: 1px solid white; */
+    height: auto;
+    padding: 20px;
+    background: linear-gradient(to bottom, #0f111a, #2f263b7e);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    scroll-behavior: smooth;
+}
+.section-app > h1, h2{
+    padding-bottom: 16px;
+}
+
+.padding-container{
+    padding: 32px;
+}

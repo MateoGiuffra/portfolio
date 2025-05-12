@@ -1,0 +1,45 @@
+.main-header{
+    height: 72px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    animation: enhance-header linear both; 
+    animation-timeline: scroll(root);
+    animation-range: 0 200px; 
+}
+
+@keyframes enhance-header{
+    to{
+        background-color: rgba(24, 36, 68, 0.432);
+        backdrop-filter: blur(10px);
+    }
+}
+
+.nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-list{
+    display: flex;
+    gap: 20px;
+}
+
+#my-name{
+    font-size: 2rem;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .nav-list > *, #my-name{
+        font-size: 1.5rem;
+    }
+}
