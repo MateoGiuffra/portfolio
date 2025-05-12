@@ -2,14 +2,22 @@ import "../styles/button.css"
 /**
  * typeOf backgroud = "white"
  * */
-const Button = ({ children, backgroud = "", goTo, onHandleClick }) => {
+const Button = ({ children, backgroud = "", goTo, onHandleClick, externalPage = false }) => {
     const buttonClazz = "button " + backgroud
+
+
     if (goTo) {
         return (
-            <a href={goTo} className={buttonClazz} nonreferrer="noreferrer" target="_blank">
+            externalPage ? (
+                <a href={goTo} className={buttonClazz} nonreferrer={externalPage ? "noreferrer" : ""} target="_blank">
+                    {children}
+                </a>
+            ) : (
+                <a href={goTo} className={buttonClazz}>
+                    {children}
+                </a>
+            )
 
-                {children}
-            </a>
         )
     }
     return (

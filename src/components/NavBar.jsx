@@ -1,10 +1,15 @@
 import "../styles/navBar.css"
+
+
 const NavBar = () => {
+    const goUp = () => {
+        document.scrollingElement.scrollTop = 0;
+    }
     return (
         <header className="main-header">
             <ul className="nav">
                 <li>
-                    <a href="#mateo-giuffra">
+                    <a onClick={() => goUp()}>
                         <p id="my-name">Mateo Giuffra</p>
                     </a>
                 </li>
