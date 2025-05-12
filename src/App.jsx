@@ -31,7 +31,7 @@ function App() {
                 </p>
                 <div className="button-container">
                   <Button externalPage={false} goTo="#contact">Contact Me</Button>
-                  <Button backgroud='white' goTo="files/CV-MateoGiuffra" download={true}>Download Resume</Button>
+                  <Button backgroud='white' goTo="files/CV-MateoGiuffra.pdf" download={true}>Download Resume</Button>
                   <Icon goTo="https://github.com/MateoGiuffra?tab=repositories" src="icons/github.svg" alt="github"></Icon>
                   <Icon goTo="https://www.linkedin.com/in/mateo-giuffra-023682289/" src="icons/linkedin.svg" alt="linkedin"></Icon>
                 </div>
@@ -81,7 +81,7 @@ function App() {
                       <li>
                         <a className="anchor-contact" href="https://www.linkedin.com/in/mateo-giuffra-023682289/" target="_blank" rel="noreferrer">
                           <div>
-                            <Icon src="src/assets/linkedin.svg" alt="linkedin" />
+                            <Icon src="icons/linkedin.svg" alt="linkedin" />
                             <p className='anchor-text'>LinkedIn</p>
                           </div>
                           <p className='anchor-sub-text'>/in/mateo-giuffra</p>
@@ -90,7 +90,7 @@ function App() {
                       <li>
                         <a className="anchor-contact" href="https://www.github.com/GiuffraMateo" target="_blank" rel="noreferrer">
                           <div>
-                            <Icon src="src/assets/github.svg" alt="GitHub" />
+                            <Icon src="icons/github.svg" alt="GitHub" />
                             <p className='anchor-text'>GitHub</p>
                           </div>
                           <p className='anchor-sub-text'>/MateoGiuffra</p>
