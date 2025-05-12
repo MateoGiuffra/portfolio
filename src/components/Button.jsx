@@ -2,9 +2,16 @@ import "../styles/button.css"
 /**
  * typeOf backgroud = "white"
  * */
-const Button = ({ children, backgroud = "", goTo, onHandleClick, externalPage = false }) => {
+const Button = ({ children, backgroud = "", goTo, onHandleClick, externalPage = false, download = false }) => {
     const buttonClazz = "button " + backgroud
 
+    if (download) {
+        return (
+            <a href={goTo} className={buttonClazz} download>
+                {children}
+            </a>
+        )
+    }
 
     if (goTo) {
         return (
@@ -17,11 +24,10 @@ const Button = ({ children, backgroud = "", goTo, onHandleClick, externalPage = 
                     {children}
                 </a>
             )
-
         )
     }
     return (
-        <button onClick={() => onHandleClick()} className={buttonClazz}>
+        <button onClick={onHandleClick} className={buttonClazz}>
             {children}
         </button>
     )

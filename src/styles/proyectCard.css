@@ -109,10 +109,33 @@
 }
 
 .proyect-card-description {
-    font-size: 1rem;
+    font-size: .7lh;
     line-height: 1.5;
     color: white;
     padding: 10px;
     max-height: 80%;
     text-align: start;
+}
+
+.proyect-card-subtitle{
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.proyect-card-more-info-list{
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    height: 100%;
+    padding-left: 24px;
+}
+
+.proyect-card-more-info{
+    color: white;
+    font-size: .7lh;
+    list-style: outside;
 }

@@ -2,7 +2,7 @@ import Button from "./Button"
 import { useState } from "react"
 import "../styles/proyectCard.css"
 
-const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo = "" }) => {
+const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo = [] }) => {
     const [flipped, setFlipped] = useState(false)
 
     return (
@@ -27,7 +27,12 @@ const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo 
                 </div>
                 <div className="proyect-card-face proyect-card-back" onClick={e => e.stopPropagation()}>
                     <h3 className="proyect-card-title">{children}</h3>
-                    <p className="proyect-card-description">{moreInfo}</p>
+                    <h4 className="proyect-card-subtitle">How it works?</h4>
+                    <ul className="proyect-card-more-info-list">
+                        {moreInfo.map((info, index) => (
+                            <li key={index} className="proyect-card-more-info">{info}</li>
+                        ))}
+                    </ul>
                     <Button onHandleClick={() => setFlipped(false)}>Back</Button>
                 </div>
             </div>

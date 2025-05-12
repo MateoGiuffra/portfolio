@@ -1,6 +1,5 @@
 .contact-form{
     flex: 1;
-    border: 1px solid #585eaf42;
     min-height: 460px;
     background-color: #1D2030;
     display: flex;
@@ -53,3 +52,4 @@
     resize: none;
     height: 80px;
 }
+

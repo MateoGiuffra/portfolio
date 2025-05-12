@@ -3,7 +3,6 @@
 .background {
   position: relative;
   min-height: 100vh;
-  /* background: linear-gradient(to bottom, #0f111a, #2f263b7e); */
   background:  #0f111a;
   background-color: #0f111a;
 }
@@ -42,12 +41,12 @@
 }
 
 .app-wrapper{
-    max-width: 1200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    gap: 64px;
+    /* gap: 64px; */
 }
 
 
@@ -109,7 +108,6 @@ h1{
     /* background-color: #0f111a; */
     /* border: 1px solid #585eaf42; */
     min-height: 460px;
-    max-width: 1200px;
     margin: 0 auto;
     
     border-radius: 16px;

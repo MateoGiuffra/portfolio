@@ -31,10 +31,9 @@ function App() {
                 </p>
                 <div className="button-container">
                   <Button externalPage={false} goTo="#contact">Contact Me</Button>
-                  <Button backgroud='white'>Download Resume</Button>
-                  <Icon goTo="https://github.com/MateoGiuffra?tab=repositories" src="./icons/github.svg" alt="github"></Icon>
+                  <Button backgroud='white' goTo="/CV-MateoGiuffra" download={true}>Download Resume</Button>
+                  <Icon goTo="https://github.com/MateoGiuffra?tab=repositories" src="icons/github.svg" alt="github"></Icon>
                   <Icon goTo="https://www.linkedin.com/in/mateo-giuffra-023682289/" src="icons/linkedin.svg" alt="linkedin"></Icon>
-                  <img src="/icons/linkedin.svg" alt="a" />
                 </div>
                 <div className="dots"></div>
               </div>
@@ -46,6 +45,7 @@ function App() {
                     key={technology.title}
                     title={technology.title}
                     src={technology.src}
+
                   >
                     {technology.name}
                   </TechnologieCard>
@@ -62,6 +62,7 @@ function App() {
                       tags={proyect.tags}
                       linkToGithub={proyect.linkToGithub}
                       description={proyect.description}
+                      moreInfo={proyect.moreInfo}
                     >
                       {proyect.title}
                     </ProyectCard>
