@@ -5,8 +5,10 @@
     outline: none;
     box-sizing: border-box;
 }
-body{
+html{
     scroll-behavior: smooth;
+}
+body{
     font-family: 'Poppins', sans-serif;
     color: rgb(250, 250, 250);
     background-color: #23232B;
@@ -14,6 +16,7 @@ body{
     width: 100%;
     font-size: 1rem;
     overflow: auto;
+    
 }
 
 li{

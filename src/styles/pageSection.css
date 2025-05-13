@@ -4,17 +4,34 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
- background: linear-gradient(to bottom, #0f111a, #2f263b7e);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    scroll-behavior: smooth;
+  
+    /* background-color: rgba(45, 18, 109, 0.438); */
+    
+    animation: fade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
+}
+
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .section-app{
+    background: linear-gradient(to bottom, #0f111a, #2f263b7e);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    height: 100vh;
     width: 100%;
     max-width: 1200px;
     height: auto;
     padding: 20px;
+    border-radius: 4px;
        
     
 }
@@ -25,3 +42,4 @@
 .padding-container{
     padding: 32px;
 }
+

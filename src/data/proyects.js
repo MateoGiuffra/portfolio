@@ -11,7 +11,7 @@ class Proyect {
 export const proyects = [
     new Proyect(
         "ChatBot",
-        "public/images/chatbot.avif",
+        "images/chatbot.avif",
         ["JavaScript", "Python", "React", "Flask"],
         "https://github.com/MateoGiuffra/chatbot-app",
         "Personalized chatbot consuming OpenAI API to generate intelligent answers. Ideal to demonstrate how to integrate an AI like ChatGPT into a real app.",

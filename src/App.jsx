@@ -10,7 +10,6 @@ import Icon from './components/Icon'
 // data
 import { technologies } from './data/technologies'
 import { proyects } from './data/proyects'
-
 function App() {
   return (
     <>
@@ -26,7 +25,7 @@ function App() {
                   University programming student,
                   Spring Boot and React developer with a passion for learning and exploring new technologies.
                   <br />
-                  I am a proactive person who enjoys working in a team and is always looking for new
+                  A proactive person who enjoys working in a team and is always looking for new
                   challenges.
                 </p>
                 <div className="button-container">
@@ -41,14 +40,15 @@ function App() {
             <PageSection title="Technologies" sectionId="technologies">
               <div className="technologies-container">
                 {technologies.map((technology) => (
-                  <TechnologieCard
-                    key={technology.title}
-                    title={technology.title}
-                    src={technology.src}
-
-                  >
-                    {technology.name}
-                  </TechnologieCard>
+                  <div className='technology-individual-card' key={technology.title}>
+                    <TechnologieCard
+                      key={technology.title}
+                      title={technology.title}
+                      src={technology.src}
+                    >
+                      {technology.name}
+                    </TechnologieCard>
+                  </div>
                 ))}
               </div>
             </PageSection>

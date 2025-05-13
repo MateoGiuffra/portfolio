@@ -28,6 +28,14 @@
   opacity: 0.3;
 }
 
+
+@media (max-width: 660px) {
+  .dots {
+    display: none;
+}
+    
+}
+
 .paragraph{
     max-width: 50%;
 }
@@ -46,7 +54,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    /* gap: 64px; */
+    gap: 64px;
 }
 
 
@@ -83,6 +91,34 @@ h1{
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+.technology-individual-card{
+    animation: appear linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
+    transition: all 0.2s ease-in-out;
+    border-radius: 12px;
+}
+
+.technology-individual-card:hover{
+    box-shadow: 0 0 20px rgb(47, 31, 128); 
+    scale: 1.05;
+    outline: 2px solid rgb(47, 31, 128); 
+}
+
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        transform: scale(1);
+    }
 }
 
 .projects-container {
