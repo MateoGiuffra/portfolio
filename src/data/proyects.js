@@ -41,7 +41,7 @@ export const proyects = [
         "images/autogs.avif",
         ["Flask", "Python", "Firebase", "Selenium"],
         "https://github.com/MateoGiuffra/autogs",
-        "This is a web app that allows obtaining a financial summary from an external page. It uses Flask in the backend, Firebase to store data, and Selenium to scrape the data from the external page.",
+        "This is a web app that allows obtaining a financial summary from an external page. Use Selenium to scrape the data from the external page.",
         [
             "The user accesses the web interface and logs in",
             "After authentication, they trigger the scraping process by clicking a button",

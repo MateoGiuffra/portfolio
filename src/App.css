@@ -140,19 +140,13 @@ h1{
     margin-top: 16px;
 }
 
-/* contact */
 .contact-container {
     display: flex;
     justify-content: space-between;
     gap: 32px;
     width: 100%;
-    padding: 32px;
-    /* background-color: #0f111a; */
-    /* border: 1px solid #585eaf42; */
     min-height: 460px;
     margin: 0 auto;
-    
-    border-radius: 16px;
 }
 
 @media  (max-width: 850px) {
@@ -164,92 +158,10 @@ h1{
     
 }
 
-
-
-.contact-info{
-    flex: 1;
-    max-width: 500px;
-    background-color: #1D2030;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    max-width: 300px;
-}
-
 .contact-container h3{
     font-size: 1.5rem;
 }
 
-.free-feel{
-    font-size: .9rem;
-    color: rgb(226, 226, 226);
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-}
 
 
 
-.contact-info-container{
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    gap: 16px;
-}
-
-.contact-info-list{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    list-style: none;
-}
-.contact-info-list > li{
-    background-color: #050816;
-    width: 100%;
-    border-radius: 8px;
-    padding: 8px;
-}
-
-
-.anchor-contact{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: start;
-    gap: 8px;
-    padding-left: 2px;
-}
-
-.anchor-contact div{
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    width: 100%;
-}
-
-
-.anchor-sub-text{
-    font-size: 0.8rem;
-    color: rgb(226, 226, 226);
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-}
-
-
-.contact-info-email p{
-    font-size: 0.8rem;
-    color: rgb(226, 226, 226);
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-}
-
-.contact-info-email .email{
-    font-size: 0.7rem;
-    color: rgb(113, 130, 226);
-}
