@@ -46,6 +46,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .app-wrapper{
@@ -54,7 +55,11 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 64px;
+    
+}
+
+.app-wrapper > *{
+    margin-bottom: 64px;
 }
 
 
@@ -99,12 +104,13 @@ h1{
     animation-range: entry 20% cover 30%;
     transition: all 0.2s ease-in-out;
     border-radius: 12px;
+    outline: 1px solid rgba(0, 0, 0, 0.438);
 }
 
 .technology-individual-card:hover{
     box-shadow: 0 0 20px rgb(47, 31, 128); 
     scale: 1.05;
-    outline: 2px solid rgb(47, 31, 128); 
+    outline: 1px solid rgb(47, 31, 128); 
 }
 
 

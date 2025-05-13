@@ -27,7 +27,7 @@ const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo 
                 </div>
                 <div className="proyect-card-face proyect-card-back" onClick={e => e.stopPropagation()}>
                     <h3 className="proyect-card-title">{children}</h3>
-                    <h4 className="proyect-card-subtitle">How it works?</h4>
+                    <h4 className="proyect-card-subtitle">How does it work?</h4>
                     <ul className="proyect-card-more-info-list">
                         {moreInfo.map((info, index) => (
                             <li key={index} className="proyect-card-more-info">{info}</li>
