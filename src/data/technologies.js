@@ -77,11 +77,11 @@ export const technologies = [
         "Firebase Platform",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
     ),
-    new TechnologyCard(
-        "Express",
-        "Express.js Framework",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-    ),
+    // new TechnologyCard(
+    //     "Express",
+    //     "Express.js Framework",
+    //     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+    // ),
     new TechnologyCard(
         "Jira",
         "Jira Project Management",
