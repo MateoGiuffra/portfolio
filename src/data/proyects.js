@@ -1,11 +1,12 @@
 class Proyect {
-    constructor(title, src, tags, linkToGithub, description, moreInfo) {
+    constructor(title, src, tags, linkToGithub, description, moreInfo, srcBackImage) {
         this.title = title;
         this.src = src;
         this.tags = tags;
         this.linkToGithub = linkToGithub;
         this.description = description;
         this.moreInfo = moreInfo;
+        this.srcBackImage = srcBackImage;
     }
 }
 export const proyects = [
@@ -20,7 +21,8 @@ export const proyects = [
             "Using JavaScript, we capture the message and consume the Flask API with axios",
             "The Flask API validates the data and sends it to its service",
             "The service is responsible for consuming the OpenAI API and obtaining the formatted response"
-        ]
+        ],
+        "images/chatbotBackImage.avif"
     ),
     new Proyect(
         "Telegram Bot",
@@ -34,7 +36,8 @@ export const proyects = [
             "Parsed data includes total amount, vendor name, and date of purchase",
             "The bot categorizes the expense and stores it into the appropriate sheet in Google Sheets",
             "Users can request summaries or specific queries through simple Telegram commands"
-        ]
+        ],
+        "images/telegramBackImage.avif"
     ),
     new Proyect(
         "AutoGS",
@@ -48,7 +51,8 @@ export const proyects = [
             "Selenium navigates the target financial site and extracts the required information",
             "The data is processed and uploaded to Firebase for persistent storage",
             "The front-end renders the summarized data using Flask routes and templates"
-        ]
+        ],
+        "images/autogsBackImage.avif"
     ),
     new Proyect(
         "Kongo Scraper",
@@ -62,6 +66,7 @@ export const proyects = [
             "Each product's name, price, and availability are extracted",
             "The structured information is stored in .json files for easy access",
             "Can be extended to update Google Sheets or integrate with a Telegram bot for alerts"
-        ]
+        ],
+        "images/kongoBackImage.avif"
     ),
 ];

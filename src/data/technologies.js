@@ -82,6 +82,11 @@ export const technologies = [
         "Express.js Framework",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
     ),
+    new TechnologyCard(
+        "Jira",
+        "Jira Project Management",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg"
+    ),
 ];
 
 

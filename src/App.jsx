@@ -64,6 +64,7 @@ function App() {
                       linkToGithub={proyect.linkToGithub}
                       description={proyect.description}
                       moreInfo={proyect.moreInfo}
+                      srcBackImage={proyect.srcBackImage}
                     >
                       {proyect.title}
                     </ProyectCard>

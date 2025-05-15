@@ -2,7 +2,7 @@ import Button from "./Button"
 import { useState } from "react"
 import "../styles/proyectCard.css"
 
-const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo = [] }) => {
+const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo = [], srcBackImage }) => {
     const [flipped, setFlipped] = useState(false)
 
     return (
@@ -37,6 +37,9 @@ const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo 
                             <li key={index} className="proyect-card-more-info">{info}</li>
                         ))}
                     </ul>
+                    <div className="proyect-card-back-image-container">
+                        <img className="proyect-card-back-image" src={srcBackImage} alt={children} />
+                    </div>
                     <Button onHandleClick={() => setFlipped(false)}>Back</Button>
                 </section>
             </div>
