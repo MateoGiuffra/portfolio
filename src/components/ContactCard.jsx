@@ -17,7 +17,7 @@ const ContactCard = () => {
                         </a>
                     </li>
                     <li>
-                        <a className="anchor-contact" href="https://www.github.com/GiuffraMateo" target="_blank" rel="noreferrer">
+                        <a className="anchor-contact" href="https://www.github.com/MateoGiuffra" target="_blank" rel="noreferrer">
                             <div>
                                 <Icon src="icons/github.svg" alt="GitHub" />
                                 <p className='anchor-text'>GitHub</p>
