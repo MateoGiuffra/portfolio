@@ -148,7 +148,7 @@
     display: flex;
     flex-flow: column wrap;
     align-items: start;
-    justify-content: start;
+    justify-content: space-between;
     gap: 12px;
     height: 100%;
     padding-left: 24px;

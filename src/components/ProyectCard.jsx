@@ -24,7 +24,7 @@ const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo 
                             </ul>
                         </section>
                         <section className="proyect-card-button-container">
-                            <Button goTo={linkToGithub}>Go to project</Button>
+                            <Button goTo={linkToGithub} externalPage={true}>Go to project</Button>
                             <Button onHandleClick={() => setFlipped(true)}>Show more info</Button>
                         </section>
                     </div>

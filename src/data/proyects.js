@@ -55,19 +55,19 @@ export const proyects = [
         "images/autogsBackImage.avif"
     ),
     new Proyect(
-        "Telegram Bot",
-        "images/telegram-logo.svg",
-        ["Google Sheets API", "Python", "Telegram API", "OCR"],
-        "https://github.com/MateoGiuffra/finance-bot",
-        "Finance manager. It uses the Google Sheets API to store and retrieve data, the Telegram API to interact with users, and OCR to extract text from images.",
+        "Landing Page of Apple",
+        "images/landingApple.avif",
+        ["HTML", "CSS", "JavaScript", "GSAP"],
+        "https://mateogiuffra.github.io/landing-page-apple/",
+        "This project is a simple web page built entirely with vanilla HTML, CSS, and JavaScript. It uses GSAP (GreenSock Animation Platform) for animations.",
         [
-            "The user sends a photo of a ticket or receipt through Telegram",
-            "The bot receives the image and processes it using OCR to extract text data",
-            "Parsed data includes total amount, vendor name, and date of purchase",
-            "The bot categorizes the expense and stores it into the appropriate sheet in Google Sheets",
-            "Users can request summaries or specific queries through simple Telegram commands"
+            "First proyect using GSAP",
+            "Use the original images and video from Apple page",
+            "Use canvas to set the images",
+            "Plugins: ScrollTrigger, SplitText",
+            "Timeline"
         ],
-        "images/telegramBackImage.avif"
+        "images/landingAppleBackImage.webp"
     ),
     new Proyect(
         "Kongo Scraper",
