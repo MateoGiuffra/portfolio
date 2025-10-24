@@ -2,8 +2,8 @@ import "../styles/button.css"
 /**
  * typeOf backgroud = "white"
  * */
-const Button = ({ children, backgroud = "", goTo, onHandleClick, externalPage = false, download = false, ...props }) => {
-    const buttonClazz = "button " + backgroud
+const Button = ({ children, background = "", goTo, onHandleClick, externalPage = false, download = false, ...props }) => {
+    const buttonClazz = "button " + background
 
     if (download) {
         return (

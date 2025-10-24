@@ -23,3 +23,11 @@
     color: #23232B;
     cursor: pointer;
 }
+
+.button.blue{
+    background: linear-gradient(90deg, var(--accent), #3fb0ff);
+    color: #05102a;
+    border: 0px;
+    font-weight: 600 ;
+    border-radius: 16px;
+}

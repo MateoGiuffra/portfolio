@@ -69,9 +69,12 @@ const Form = () => {
                             aria-label="Message"
                         />
                     </legend>
-                    <Button type="submit" disabled={isSending}>
-                        {isSending ? 'Sending...' : 'Send Message'}
-                    </Button>
+                    <div className="send-message-container">
+                        <Button background="blue" type="submit" disabled={isSending}>
+                            {isSending ? 'Sending...' : 'Send Message'}
+                        </Button>
+
+                    </div>
                 </div>
             </form>
             <Toaster position="bottom-center" />

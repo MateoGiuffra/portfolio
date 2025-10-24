@@ -32,6 +32,15 @@
     width: 100%;
 }
 
+.send-message-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: end;
+    /* background-color: red; */
+}
+
 .contact-form-legend{
     font-size: 0.95rem;
     display: flex;

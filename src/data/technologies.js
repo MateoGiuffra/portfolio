@@ -7,6 +7,7 @@ class TechnologyCard {
 }
 
 export const technologies = [
+    // Frontend / UI
     new TechnologyCard(
         "HTML",
         "Hypertext Markup Language",
@@ -42,20 +43,17 @@ export const technologies = [
         "Tailwind CSS",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
     ),
-    new TechnologyCard(
-        "Spring",
-        "Spring Framework",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
-    ),
+
+    // Backend / APIs
     new TechnologyCard(
         "Java",
         "Java Programming Language",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
     ),
     new TechnologyCard(
-        "Flask",
-        "Flask Framework",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg"
+        "Spring",
+        "Spring Framework",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
     ),
     new TechnologyCard(
         "Python",
@@ -63,15 +61,22 @@ export const technologies = [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
     ),
     new TechnologyCard(
-        "Selenium",
-        "Selenium Automation Tool",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg"
+        "Flask",
+        "Flask Framework",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg"
     ),
     new TechnologyCard(
-        "Git",
-        "Git Version Control",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+        "FastApi",
+        "FastAPI Framework",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
     ),
+    new TechnologyCard(
+        "Express",
+        "Express.js Framework",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+    ),
+
+    // Databases / Platforms
     new TechnologyCard(
         "MySQL",
         "MySQL Database",
@@ -92,17 +97,18 @@ export const technologies = [
         "Firebase Platform",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
     ),
-    new TechnologyCard(
-        "Express",
-        "Express.js Framework",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-    ),
-    new TechnologyCard(
-        "FastApi",
-        "FastAPI Framework",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
-    ),
 
+    // Tools / Others
+    new TechnologyCard(
+        "Git",
+        "Git Version Control",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+    ),
+    new TechnologyCard(
+        "Selenium",
+        "Selenium Automation Tool",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg"
+    ),
     new TechnologyCard(
         "Jira",
         "Jira Project Management",
