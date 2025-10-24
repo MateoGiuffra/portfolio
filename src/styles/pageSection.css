@@ -4,12 +4,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  
-    /* background-color: rgba(45, 18, 109, 0.438); */
-    
-    animation: fade-in linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 30%;
+    min-height: 100vh; /* full viewport section */
+    padding: 48px 16px;
+    scroll-snap-align: start;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    /* avoid anchor/scroll landing under the fixed navbar (adjust to your navbar height) */
+    scroll-margin-top: 92px;
 }
 
 
@@ -23,23 +23,31 @@
 }
 
 .section-app{
-    background: linear-gradient(to bottom, #0f111a, #2f263b7e);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    height: 100vh;
     width: 100%;
     max-width: 1200px;
-    height: auto;
-    padding: 20px;
-    border-radius: 4px;
+    /* make the section background visually match the page background */
+    background: transparent; /* inherit the page background visually */
+    box-shadow: none; /* remove the card shadow so edges blend */
+    backdrop-filter: none;
+    padding: 40px;
+    border-radius: 0;
 }
 
 
-.section-app > h1, h2{
+.section-app > h1, .section-app > h2, h2{
     padding-bottom: 16px;
+    color: #fff;
+}
+
+.section-app > h2{
+    font-family: 'DM Serif Text', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    margin-bottom: 8px;
+    letter-spacing: 0.6px;
+    color: #f8fafc;
 }
 
 .padding-container{
-    padding: 32px;
+    padding: 24px 0 0 0;
 }
 

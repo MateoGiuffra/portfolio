@@ -9,9 +9,13 @@ const ProyectCard = ({ children, src, tags, linkToGithub, description, moreInfo 
         <article className="proyect-card-wrapper" onClick={() => setFlipped(!flipped)}>
             <div className={`proyect-card-inner ${flipped ? "flipped" : ""}`}>
                 <section className="proyect-card-face proyect-card-front" onClick={e => e.stopPropagation()}>
-                    <div className="proyect-title-img-and-description-container">
-                        <h3 className="proyect-card-title">{children}</h3>
+                    <div className="proyect-card-media">
                         <img className="proyect-card-img" src={src} alt={children} />
+                        <div className="proyect-card-overlay">
+                            <h3 className="proyect-card-title">{children}</h3>
+                        </div>
+                    </div>
+                    <div className="proyect-title-img-and-description-container">
                         <p className="proyect-card-description">{description}</p>
                     </div>
                     <div className="proyect-card-techs-and-buttons-container">

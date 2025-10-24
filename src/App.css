@@ -37,7 +37,9 @@
 }
 
 .paragraph{
-    max-width: 50%;
+    max-width: 66%;
+    color: rgba(255,255,255,0.95);
+    font-size: 1.05rem;
 }
 
 .app-container{
@@ -46,7 +48,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
 }
 
 .app-wrapper{
@@ -59,7 +60,7 @@
 }
 
 .app-wrapper > *{
-    margin-bottom: 64px;
+    margin-bottom: 0; /* sections are full-screen - spacing handled inside each section */
 }
 
 
@@ -72,18 +73,19 @@
 }
 
 #mateo-giuffra{
-    margin-top:  64px;
-    
+    margin-top:  0;
 }
 
 .button-container{
     display: flex;
     gap: 16px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 h1{
-    font-size: 3rem;
+    font-size: clamp(2rem, 4.5vw, 3.6rem);
+    line-height: 1.05;
 }
 
 
@@ -141,16 +143,18 @@ h1{
 }
 
 .contact-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 32px;
+    display: grid;
+    grid-template-columns: 1fr 360px; /* form | contact card */
+    gap: 28px;
     width: 100%;
-    min-height: 460px;
+    min-height: 480px;
     margin: 0 auto;
+    align-items: stretch;
 }
 
 @media  (max-width: 850px) {
     .contact-container {
+        display: flex;
         flex-direction: column;
         align-items: center;
         gap: 16px;

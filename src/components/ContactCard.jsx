@@ -1,42 +1,47 @@
 import Icon from './Icon'
 import "../styles/contactCard.css"
+
 const ContactCard = () => {
     return (
-        <div className='contact-info'>
-            <div className='contact-info-container'>
-                <h3>Connect with me</h3>
-                <p className='free-feel'>Feel free to connect with me on any of these platforms</p>
-                <ul className='contact-info-list'>
-                    <li>
-                        <a className="anchor-contact" href="https://www.linkedin.com/in/mateo-giuffra-023682289/" target="_blank" rel="noreferrer">
-                            <div>
-                                <Icon src="icons/linkedin.svg" alt="linkedin" />
-                                <p className='anchor-text'>LinkedIn</p>
-                            </div>
-                            <p className='anchor-sub-text'>/in/mateo-giuffra</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a className="anchor-contact" href="https://www.github.com/MateoGiuffra" target="_blank" rel="noreferrer">
-                            <div>
-                                <Icon src="icons/github.svg" alt="GitHub" />
-                                <p className='anchor-text'>GitHub</p>
-                            </div>
-                            <p className='anchor-sub-text'>/MateoGiuffra</p>
-                        </a>
-                    </li>
-                </ul>
-                <div className='contact-info-email'>
-                    <p>Prefer email? Reach out directly at:</p>
-                    <a
-                        href='https://mail.google.com/mail/u/0/#inbox'
-                        className='email'
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        matteogiuffrah40@gmail.com
-                    </a>
+        <div className='contact-card'>
+            <div className='contact-card-header'>
+                <div className='contact-avatar'>
+                    <div className="contact-initials">MG</div>
                 </div>
+                <div className='contact-card-title'>
+                    <h3>Connect with me</h3>
+                    <p className='free-feel'>Feel free to connect with me on any of these platforms</p>
+                </div>
+            </div>
+
+            <ul className='contact-methods'>
+                <li>
+                    <a className="contact-method" href="https://www.linkedin.com/in/mateo-giuffra-023682289/" target="_blank" rel="noreferrer">
+                        <div className='method-left'>
+                            <Icon src="icons/linkedin.svg" alt="linkedin" />
+                            <div className='method-texts'>
+                                <span className='method-title'>LinkedIn</span>
+                                <small className='method-sub'>/in/mateo-giuffra</small>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a className="contact-method" href="https://www.github.com/MateoGiuffra" target="_blank" rel="noreferrer">
+                        <div className='method-left'>
+                            <Icon src="icons/github.svg" alt="GitHub" />
+                            <div className='method-texts'>
+                                <span className='method-title'>GitHub</span>
+                                <small className='method-sub'>/MateoGiuffra</small>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div className='contact-card-actions'>
+                <a className='btn primary' href='mailto:matteogiuffrah40@gmail.com'>Send Email</a>
+                <a className='btn outline' href='files/CV-MateoGiuffra.pdf' download>Download CV</a>
             </div>
         </div>
     )

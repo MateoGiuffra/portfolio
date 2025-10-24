@@ -23,9 +23,24 @@ export const technologies = [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
     ),
     new TechnologyCard(
+        "TypeScript",
+        "TypeScript",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+    ),
+    new TechnologyCard(
         "React",
         "React.js",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+    ),
+    new TechnologyCard(
+        "Next",
+        "Next.js",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+    ),
+    new TechnologyCard(
+        "Tailwind",
+        "Tailwind CSS",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
     ),
     new TechnologyCard(
         "Spring",
@@ -77,11 +92,17 @@ export const technologies = [
         "Firebase Platform",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
     ),
-    // new TechnologyCard(
-    //     "Express",
-    //     "Express.js Framework",
-    //     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-    // ),
+    new TechnologyCard(
+        "Express",
+        "Express.js Framework",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+    ),
+    new TechnologyCard(
+        "FastApi",
+        "FastAPI Framework",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
+    ),
+
     new TechnologyCard(
         "Jira",
         "Jira Project Management",

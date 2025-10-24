@@ -1,14 +1,17 @@
 import "../styles/form.css";
 import Button from "./Button";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Toaster, toast } from 'react-hot-toast';
 
 const Form = () => {
     const formRef = useRef();
+    const [isSending, setIsSending] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setIsSending(true);
 
         emailjs.sendForm(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -24,45 +27,51 @@ const Form = () => {
             .catch((error) => {
                 console.error("Error al enviar el mensaje:", error);
                 toast.error('Ocurrió un error');
-            });
+            })
+            .finally(() => setIsSending(false));
     };
 
     return (
         <>
             <form ref={formRef} className='contact-form' onSubmit={handleSubmit}>
                 <div className='contact-form-container'>
-                    <legend className='contact-form-legend'>
-                        <label htmlFor="name">Name</label>
-                        <input
-                            className='input-form'
-                            type="text"
-                            name="user_name"
-                            placeholder='Your name'
-                            required
-                        />
-                    </legend>
-                    <legend className='contact-form-legend'>
-                        <label htmlFor="email">Email</label>
-                        <input
-                            className='input-form'
-                            type="email"
-                            name="user_email"
-                            placeholder='Your email address'
-                            required
-                        />
-                    </legend>
+                    <div className='contact-row'>
+                        <legend className='contact-form-legend'>
+                            <label htmlFor="name">Name</label>
+                            <input
+                                className='input-form'
+                                type="text"
+                                name="user_name"
+                                placeholder='Your name'
+                                required
+                            />
+                        </legend>
+                        <legend className='contact-form-legend'>
+                            <label htmlFor="email">Email</label>
+                            <input
+                                className='input-form'
+                                type="email"
+                                name="user_email"
+                                placeholder='Your email address'
+                                required
+                            />
+                        </legend>
+                    </div>
                     <legend className='contact-form-legend'>
                         <label htmlFor="message">Message</label>
                         <textarea
-                            id='textarea'
-                            className='input-form'
+                            id='message'
+                            className='input-form input-message'
                             name="message"
                             placeholder='Your message'
                             required
                             minLength={10}
+                            aria-label="Message"
                         />
                     </legend>
-                    <Button type="submit">Send Message</Button>
+                    <Button type="submit" disabled={isSending}>
+                        {isSending ? 'Sending...' : 'Send Message'}
+                    </Button>
                 </div>
             </form>
             <Toaster position="bottom-center" />

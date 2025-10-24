@@ -1,55 +1,91 @@
 .contact-form{
     flex: 1;
-    min-height: 460px;
-    background-color: #1D2030;
+    min-height: 480px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
+    justify-content: stretch;
+    align-items: stretch;
+    border-radius: 12px;
     width: 100%;
-    max-width: 700px;
+    max-width: 100%;
+    padding: 18px;
+    box-shadow: 0 14px 40px rgba(2,6,23,0.45);
+    border: 1px solid rgba(255,255,255,0.04);
+    height: 100%;
 }
 
 
 .contact-form-container{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    padding: 16px;
-    gap: 16px;
+    gap: 12px;
+    padding: 6px 0;
     width: 100%;
     height: 100%;
 }
+
+.contact-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+    width: 100%;
+}
+
 .contact-form-legend{
-    font-size: 1rem;
+    font-size: 0.95rem;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
+
 .input-form{
-    background-color: rgb(32, 30, 37);
-    border: none;
+    background: rgba(0,0,0,0.28);
+    border: 1px solid rgba(255,255,255,0.04);
     height: 48px;
-    padding: 8px;
-    border-radius: 16px;
-    font-size: .8rem;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: .95rem;
     font-family: "Poppins", sans-serif;
-    color: white;
-    background-color: transparent;
-    border-bottom: 1px solid rgb(176, 189, 230);
-    border-top: 1px solid rgba(81, 82, 138, 0.589);
-}
-.input-form:focus{
-    border: 1.5px solid rgb(218, 221, 236);
-    box-shadow: 2px -1px 32px 25px rgb(194, 201, 211) inset;
--webkit-box-shadow: 2px -1px 32px 25px rgba(81, 78, 122, 0.17) inset;
--moz-box-shadow: 2px -1px 32px 25px rgba(125,153,196,0.17) inset;
-    transition: all 0.3s ease-in-out;
+    color: rgba(255,255,255,0.95);
+    transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
-#textarea{
-    resize: none;
-    height: 80px;
+.input-form:focus{
+    border-color: var(--accent);
+    box-shadow: 0 6px 24px rgba(79,168,255,0.08), inset 0 1px 0 rgba(255,255,255,0.02);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+
+/* message as a large input (not a textarea) so user can't resize it */
+.input-message{
+    grid-column: 1 / -1;
+    min-height: 180px; /* larger message area */
+    padding: 12px;
+    align-self: stretch;
+    box-sizing: border-box;
+    resize: none; /* prevent manual resizing */
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+.input-form::placeholder{ color: rgba(255,255,255,0.5) }
+
+/* place submit button full width under fields */
+.contact-form-container > .button{
+    grid-column: 1 / -1;
+    align-self: end;
+    padding: 12px 20px;
+}
+
+/* ensure form fills available height and textarea expands */
+.contact-form .contact-form-container{ display: flex; flex-direction: column; }
+.contact-form .contact-form-container .input-message{ margin-top: 6px }
+
+@media(max-width: 860px){
+    .contact-form-container{ grid-template-columns: 1fr; }
+    .contact-form-container > .button{ justify-self: center; width: 100%; }
 }
 

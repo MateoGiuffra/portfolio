@@ -24,6 +24,58 @@ export const proyects = [
     //     ],
     //     "images/chatbotBackImage.avif"
     // ),
+
+    new Proyect(
+        "FastAPI User Management API",
+        "images/fastapi.avif",
+        ["Python", "FastAPI", "SQLAlchemy", "Alembic", "Docker", "Pytest", "JWT", "bcrypt"],
+        "https://fastapi-api-rest-8jle.onrender.com/docs",
+        "A robust and scalable REST API for user management built with FastAPI. Clean Architecture with separated layers (Routers, Services, Repositories), secure JWT authentication via HttpOnly cookies, SQLAlchemy ORM and Alembic migrations, containerized for production and fully tested.",
+        [
+            "Secure JWT-based authentication stored in HttpOnly cookies (protects against XSS)",
+            "Clean Architecture: Routers, Services, Repositories and dependency injection",
+            "Database interactions with SQLAlchemy and migrations managed by Alembic",
+            "Multi-stage Dockerfile for lightweight production images",
+            "Comprehensive unit and integration test suite with Pytest",
+            "Built-in pagination and input validation"
+        ],
+        "images/fastapiBackImage.avif"
+    ),
+    new Proyect(
+        "Football API",
+        "images/football.avif",
+        ["Java", "Spring Boot", "JPA", "Spring Security", "Mockito", "Docker", "AOP", "Caching"],
+        "https://football-unq.onrender.com",
+        "Spring Boot REST API for football data (teams, players) implementing Clean Architecture. Integrates WhoScored scraping, scheduling, caching and cookie+JWT authentication. Includes tests (Mockito), AOP-based endpoint logging and CI/CD-ready configuration.",
+        [
+            "Proxy-based HTTP fetching and WhoScored scraping/parsing utilities",
+            "Concurrent scraping of players using thread pools and futures for performance",
+            "AOP aspect that logs endpoint accesses and a service/controller for endpoint logs",
+            "Authentication via cookies + JWT, integrated with Spring Security",
+            "Caching and scheduled tasks (e.g., periodic data refresh every 4 hours)",
+            "Unit and integration tests with Mockito and CI/CD pipelines for deployment"
+        ],
+        "images/footballBackImage.avif"
+    ),
+
+    new Proyect(
+        "Simulador Von Neumann - UNQ",
+        "images/von_neumann.avif",
+        ["React", "JavaScript", "HTML", "CSS", "Vercel"],
+        "https://github.com/MateoGiuffra/tabla-de-pila",
+        "Web application that simulates the instruction cycle and stack behavior in a Von Neumann architecture. Developed for the 'Organización de Computadoras' course at Universidad Nacional de Quilmes. Live demo available on Vercel.",
+        [
+            "Editable spreadsheet-like table with columns: PC, IR, PC-BI, Instruction, Dest, Orig, Stack, SP, PC-EX",
+            "Automatic instruction parser: write into IR and the system auto-fills related fields",
+            "Real-time validations (e.g., PC-BI must equal PC + instruction_size)",
+            "Step-by-step simulator: FETCH → DECODE → EXECUTE → WRITEBACK",
+            "Keyboard shortcuts for productivity, dark/light theme with optional Monokai",
+            "Export/Import in multiple formats (PDF, PNG, JSON, CSV) and full Undo/Redo history",
+            "Supported instructions: MOV, ADD, SUB, MUL, DIV, PUSH, POP, CALL, RET, JMP, CMP, JE, JNE, JG, JL, NOP",
+            "Repo and demo: https://github.com/MateoGiuffra/tabla-de-pila  •  https://simulador-de-pila.vercel.app/"
+        ],
+        "images/von_neumannBackImage.avif"
+    ),
     new Proyect(
         "Epergeist",
         "images/epergeist.avif",
@@ -38,51 +90,6 @@ export const proyects = [
             "Spring WebFlux: Handles reactive programming and asynchronous data flow",
         ],
         "images/epergeistBackImage.avif"
-    ),
-    new Proyect(
-        "AutoGS",
-        "images/autogs.avif",
-        ["Flask", "Python", "Firebase", "Selenium"],
-        "https://github.com/MateoGiuffra/autogs",
-        "This is a web app that allows obtaining a financial summary from an external page. Use Selenium to scrape the data from the external page.",
-        [
-            "The user accesses the web interface and logs in",
-            "After authentication, they trigger the scraping process by clicking a button",
-            "Selenium navigates the target financial site and extracts the required information",
-            "The data is processed and uploaded to Firebase for persistent storage",
-            "The front-end renders the summarized data using Flask routes and templates"
-        ],
-        "images/autogsBackImage.avif"
-    ),
-    new Proyect(
-        "Landing Page of Apple",
-        "images/landingApple.avif",
-        ["HTML", "CSS", "JavaScript", "GSAP"],
-        "https://mateogiuffra.github.io/landing-page-apple/",
-        "This project is a simple web page built entirely with vanilla HTML, CSS, and JavaScript. It uses GSAP (GreenSock Animation Platform) for animations.",
-        [
-            "First proyect using GSAP",
-            "Use the original images and video from Apple page",
-            "Use canvas to set the images",
-            "Plugins: ScrollTrigger, SplitText",
-            "Timeline"
-        ],
-        "images/landingAppleBackImage.webp"
-    ),
-    new Proyect(
-        "Kongo Scraper",
-        "images/kongo.avif",
-        ["Google Sheets API", "Python", "Telegram API", "OCR"],
-        "https://github.com/MateoGiuffra/web-scrapping-kotk",
-        "Scraper built in Python that extracts product information from the site kingofthekongo.com.ar, saving the data in structured .json files.",
-        [
-            "The scraper is executed via CLI or scheduled task",
-            "It accesses the e-commerce site and navigates through product listings",
-            "Each product's name, price, and availability are extracted",
-            "The structured information is stored in .json files for easy access",
-            "Can be extended to update Google Sheets or integrate with a Telegram bot for alerts"
-        ],
-        "images/kongoBackImage.avif"
     ),
 ];
 
