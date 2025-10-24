@@ -11,6 +11,7 @@ import ContactCard from './components/ContactCard'
 // data
 import { technologies } from './data/technologies'
 import { proyects } from './data/proyects'
+import { cvPath } from './data/constants'
 function App() {
   return (
     <>
@@ -31,8 +32,8 @@ function App() {
                   challenges.
                 </p>
                 <div className="button-container">
-                  <Button externalPage={false} goTo="#contact">Contact Me</Button>
-                  <Button backgroud='white' goTo="files/CV - MateoGiuffra.docx" download={true}>Download Resume</Button>
+                  <Button externalPage={false} goTo="#contact" style={{ maxWidth: "200px" }}>Contact Me</Button>
+                  <Button backgroud='white' goTo={cvPath} download={true} style={{ maxWidth: "200px" }}>Download Resume</Button>
                   <Icon goTo="https://github.com/MateoGiuffra?tab=repositories" src="icons/github.svg" alt="github"></Icon>
                   <Icon goTo="https://www.linkedin.com/in/mateo-giuffra-023682289/" src="icons/linkedin.svg" alt="linkedin"></Icon>
                 </div>

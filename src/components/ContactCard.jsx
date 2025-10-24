@@ -1,6 +1,7 @@
 import Icon from './Icon'
 import "../styles/contactCard.css"
-
+import Button from './Button'
+import { cvPath } from '../data/constants'
 const ContactCard = () => {
     return (
         <div className='contact-card'>
@@ -40,8 +41,8 @@ const ContactCard = () => {
             </ul>
 
             <div className='contact-card-actions'>
-                <a className='btn primary' href='mailto:matteogiuffrah40@gmail.com'>Send Email</a>
-                <a className='btn outline' href='files/CV-MateoGiuffra.pdf' download>Download CV</a>
+                <Button goTo='mailto:matteogiuffrah40@gmail.com'>Send Email</Button>
+                <Button goTo={cvPath} download>Download CV</Button>
             </div>
         </div>
     )

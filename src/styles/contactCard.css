@@ -65,7 +65,7 @@
 .method-title{ font-weight: 600; color: #fff }
 .method-sub{ font-size: 0.85rem; color: rgba(255,255,255,0.75) }
 
-.contact-card-actions{ display:flex; gap: 10px; justify-content: flex-start }
+.contact-card-actions{ display:flex; gap: 10px; justify-content: flex-start; max-height: 50px }
 .btn{ padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight:600 }
 .btn.primary{    font-weight: 600; background: linear-gradient(90deg, var(--accent), #3fb0ff); color: #05102a }
 .btn.outline{ background: transparent; border: 1px solid rgba(255,255,255,0.06); color: #eaf2ff }

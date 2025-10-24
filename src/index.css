@@ -2,7 +2,7 @@
 :root{
     --bg-900: #0f111a;
     --bg-800: #161923;
-    --accent: #4fa8ff;
+    --accent: #3f8ad4;
     --glass: rgba(255,255,255,0.04);
     --card: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
 }
