@@ -1,1 +1,0 @@
-export const cvPath = "files/CV - MateoGiuffra.docx";

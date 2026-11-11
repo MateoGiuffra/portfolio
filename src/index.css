@@ -1,50 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Text:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-:root{
-    --bg-900: #0f111a;
-    --bg-800: #161923;
-    --accent: #3f8ad4;
-    --glass: rgba(255,255,255,0.04);
-    --card: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-}
-*, *::before, *::after{	
-    padding: 0;
-    margin: 0;
-    outline: none;
-    box-sizing: border-box;
+/* Tokens y base. Dirección: plano técnico (blueprint) para el hero, papel claro para el contenido. */
+:root {
+  --blueprint: #0c2a5e;
+  --blueprint-deep: #081d44;
+  --on-blueprint: #f4f6f8;
+  --on-blueprint-soft: #b8cbf2;
+  --draft-line: #8fb0f0;
+
+  --paper: #f4f6f8;
+  --paper-edge: #d5dce6;
+  --ink: #0b1b33;
+  --ink-soft: #46556e;
+  --link: #14459c;
+
+  --signal: #ffb400;
+  --signal-ink: #1a1200;
+
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+
+  --measure: 64ch;
+  --gutter: clamp(20px, 5vw, 48px);
+  --page: 1120px;
+
+  color-scheme: light;
 }
 
-
-html{
-    scroll-behavior: smooth;
-    height: 100%;
-}
-body{
-    font-family: 'Poppins', sans-serif;
-    color: rgb(250, 250, 250);
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(79,168,255,0.06), transparent), linear-gradient(180deg, var(--bg-900), var(--bg-800));
-    min-height: 100vh;
-    width: 100%;
-    font-size: 1rem;
-    overflow-y: auto;
-    -webkit-font-smoothing: antialiased;
-    scroll-snap-type: y mandatory;
-    
-}
-.space{
-    height: 100px;
-    background-color: radial-gradient(1200px 600px at 10% 10%, rgba(79,168,255,0.06), transparent), linear-gradient(180deg, var(--bg-900), var(--bg-800));
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-li{
-    list-style: none;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+  -webkit-text-size-adjust: 100%;
 }
 
-a, button{
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 400;
-    color: rgb(250, 250, 250);
-    text-align: center;
+body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
