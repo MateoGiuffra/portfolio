@@ -6,11 +6,11 @@
   --on-blueprint-soft: #b8cbf2;
   --draft-line: #8fb0f0;
 
-  --paper: #f4f6f8;
-  --paper-edge: #d5dce6;
-  --ink: #0b1b33;
-  --ink-soft: #46556e;
-  --link: #14459c;
+  --paper: #f0f0ff;
+  --paper-edge: #d8d8ee;
+  --ink: #0a0a14;
+  --ink-soft: #4b4b63;
+  --link: #0a0a14;
 
   --signal: #ffb400;
   --signal-ink: #1a1200;
@@ -19,8 +19,8 @@
   --font-body: 'Source Serif 4', Georgia, serif;
 
   --measure: 64ch;
-  --gutter: clamp(20px, 5vw, 48px);
-  --page: 1120px;
+  --gutter: clamp(20px, 5vw, 96px);
+  --page: 1600px;
 
   color-scheme: light;
 }
@@ -40,7 +40,7 @@ html {
 }
 
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: 1.0625rem;
   line-height: 1.65;
   color: var(--ink);

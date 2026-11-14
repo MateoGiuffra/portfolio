@@ -1,23 +1,40 @@
+import RollText from './RollText'
+
 const Header = ({ t, onToggleLang }) => (
   <header className="site-header">
     <div className="site-header-inner">
       <a className="brand" href="#top">Mateo Giuffra</a>
       <nav aria-label="Principal">
         <ul className="nav-list">
-          <li><a href="#work">{t.nav.work}</a></li>
-          <li><a href="#experience">{t.nav.experience}</a></li>
-          <li><a href="#projects">{t.nav.projects}</a></li>
-          <li><a href="#skills">{t.nav.skills}</a></li>
-          <li><a href="#contact">{t.nav.contact}</a></li>
+          {[
+            ['work', t.nav.work],
+            ['experience', t.nav.experience],
+            ['projects', t.nav.projects],
+            ['skills', t.nav.skills],
+          ].map(([id, label]) => (
+            <li key={id}>
+              <a className="pill roll-host" href={`#${id}`}>
+                <span className="sr-only">{label}</span>
+                <RollText text={label} />
+              </a>
+            </li>
+          ))}
+          <li>
+            <a className="pill pill-dark roll-host" href="#contact">
+              <span className="sr-only">{t.nav.contact}</span>
+              <RollText text={t.nav.contact} />
+              <i className="pill-dot" aria-hidden="true" />
+            </a>
+          </li>
         </ul>
       </nav>
       <button
         type="button"
-        className="lang-toggle"
+        className="pill lang-toggle roll-host"
         onClick={onToggleLang}
         aria-label={t.langToggle.label}
       >
-        {t.langToggle.short}
+        <RollText text={t.langToggle.short} />
       </button>
     </div>
   </header>

@@ -1,21 +1,28 @@
+import RollText from './RollText'
+import ScreenPaint from './ScreenPaint'
 import ArchitectureDiagram from './ArchitectureDiagram'
 import { CV_FILES, LINKS } from '../i18n/content'
 
 const Hero = ({ t, lang }) => (
   <section id="top" className="hero">
+    <ScreenPaint />
     <div className="hero-inner">
       <div className="hero-copy">
         <h1>{t.hero.title}</h1>
         <p className="hero-text">{t.hero.text}</p>
         <div className="hero-actions">
           <a
-            className="btn btn-primary"
+            className="btn btn-primary roll-host"
             href={`${import.meta.env.BASE_URL}${CV_FILES[lang]}`}
             download
           >
-            {t.hero.cv}
+            <span className="sr-only">{t.hero.cv}</span>
+            <RollText text={t.hero.cv} />
           </a>
-          <a className="btn btn-outline" href="#contact">{t.hero.contact}</a>
+          <a className="btn btn-outline roll-host" href="#contact">
+            <span className="sr-only">{t.hero.contact}</span>
+            <RollText text={t.hero.contact} />
+          </a>
         </div>
         <ul className="hero-links">
           <li><a href={LINKS.github} target="_blank" rel="noreferrer">GitHub</a></li>

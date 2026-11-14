@@ -91,7 +91,9 @@ export const content = {
     },
     projects: {
       title: 'Proyectos',
+      lead: 'Una selección de APIs, SDKs y herramientas que construí de punta a punta.',
       code: 'Código',
+      view: 'Ver',
       demo: 'Demo',
       items: [
         {
@@ -265,7 +267,9 @@ export const content = {
     },
     projects: {
       title: 'Projects',
+      lead: 'A selection of APIs, SDKs and tools I built end to end.',
       code: 'Code',
+      view: 'View',
       demo: 'Demo',
       items: [
         {
