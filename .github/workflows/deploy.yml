@@ -28,6 +28,8 @@ jobs:
 
       - run: npm ci
 
-      # `npm run deploy` hace el build (predeploy) y publica dist/ en gh-pages.
-      - name: Build y publicar
-        run: npm run deploy -- -u "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+      - name: Build
+        run: npm run build
+
+      - name: Publicar dist/ en gh-pages
+        run: npx gh-pages -d dist -u "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
