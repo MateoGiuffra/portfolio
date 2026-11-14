@@ -1,42 +1,11 @@
-.bo { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; color: #e8e8ef; background: #0f1014; min-height: 100vh; font: 15px/1.5 system-ui, sans-serif; }
-body:has(.bo) { background: #0f1014; }
-.bo h1 { font-size: 22px; margin: 0; }
-.bo h2 { font-size: 18px; margin: 0 0 12px; }
-.bo-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 24px; }
-.bo-head nav { display: flex; gap: 8px; flex: 1; }
-.bo button { background: #4f6bff; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; font: inherit; }
-.bo button.ghost { background: transparent; border: 1px solid #3a3d4a; color: #e8e8ef; }
-.bo button.on { background: #2a2f4a; }
-.bo button.danger { color: #ff8a8a; border-color: #5a3238; }
-.bo button:disabled { opacity: .6; cursor: wait; }
-.bo-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.bo-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.bo-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; background: #181a22; border-radius: 10px; }
-.bo-list small { display: block; color: #8b8fa3; }
-.bo-form { display: grid; gap: 12px; }
-.bo-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-.bo-field { display: grid; gap: 4px; font-size: 13px; color: #a6a9bb; }
-.bo-field input, .bo-field textarea { background: #181a22; border: 1px solid #2c2f3b; border-radius: 8px; color: #e8e8ef; padding: 8px 10px; font: inherit; }
-.bo-actions { display: flex; gap: 8px; }
-.bo-muted { color: #8b8fa3; }
-.bo-error { color: #ff8a8a; }
-.bo-empty { display: grid; gap: 12px; justify-items: start; }
-.bo-login { display: grid; gap: 16px; justify-items: start; align-content: center; }
-.bo-login a { color: #8b8fa3; }
-.bo-lang { display: grid; gap: 4px; }
-.bo-lang small { color: #8b8fa3; font-weight: 600; }
-.bo-obj { display: grid; gap: 8px; padding: 8px; border-left: 2px solid #2c2f3b; }
-.bo-rep { display: grid; gap: 8px; justify-items: start; }
-.bo-rep-item { display: flex; gap: 8px; align-items: start; width: 100%; }
-.bo-rep-item > :first-child { flex: 1; }
-.bo textarea, .bo select, .bo input { max-width: 100%; box-sizing: border-box; }
-.bo select { background: #181a22; border: 1px solid #2c2f3b; border-radius: 8px; color: #e8e8ef; padding: 8px 10px; font: inherit; }
-.bo input[type='color'] { padding: 0; height: 36px; width: 64px; }
-.bo-list li.is-hidden { opacity: .5; }
-.bo-card { display: grid; grid-template-columns: minmax(220px, 360px) 1fr; gap: 16px; align-items: start; padding: 12px; background: #14161d; border-radius: 12px; }
-.bo-card-preview .fcard-image { pointer-events: none; }
-.bo-card-controls { display: grid; gap: 12px; }
-.bo-colors { display: flex; gap: 12px; }
-.bo-presets { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.bo .bo-swatch { width: 28px; height: 28px; padding: 0; border-radius: 50%; border: 2px solid; }
-@media (max-width: 640px) { .bo-card { grid-template-columns: 1fr; } }
+/* Solo lo que Mantine no cubre. El resto del estilo viene de @mantine/core. */
+.bo-sticky-foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-top: 8px;
+  padding: 12px 0;
+  background: var(--mantine-color-dark-7);
+  border-top: 1px solid var(--mantine-color-dark-4);
+}
+.bo-dirty { color: var(--mantine-color-yellow-5); font-size: 13px; margin-right: auto; }

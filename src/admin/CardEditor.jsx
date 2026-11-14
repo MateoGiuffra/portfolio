@@ -1,51 +1,55 @@
+import { ColorInput, Group, Select, SimpleGrid, Stack, Text, UnstyledButton } from '@mantine/core'
 import ProjectCardArt from '../components/ProjectCardArt'
 import { CARD_VARIANTS, PALETTE, cardOf } from '../config/cardPalette'
 
+const SWATCHES = [...new Set(PALETTE.flat())]
+const COLORS = [['bg', 'Fondo'], ['fg', 'Texto'], ['accent', 'Acento']]
+
 // Look & feel de la tarjeta del proyecto: variante, colores y vista previa en vivo.
+// Usa las clases globales .fcard-image--<variante> (App.css, ya cargado por la app).
 export default function CardEditor({ item, onChange }) {
-  const card = cardOf(item, item.order ?? 0)
+  const idx = Number(item.order) || 0
+  const card = cardOf(item, idx)
   const set = (patch) => onChange({ ...card, ...patch })
-  const hasPhoto = (item.photos || []).length > 0
-  const title = item.title?.es || 'Proyecto'
-  const preview = { title, stack: item.stack || [], photos: item.photos || [], card }
+  const photos = item.photos || []
+  const variants = [
+    ...CARD_VARIANTS.map((v) => ({ value: v.id, label: v.label })),
+    ...(photos.length ? [{ value: 'photo', label: 'Foto (usa la primera)' }] : []),
+  ]
+  const preview = { title: item.title?.es || 'Proyecto', stack: item.stack || [], photos, card }
 
   return (
-    <div className="bo-card">
-      <div
-        className="bo-card-preview"
-        style={{ '--card-bg': card.bg, '--card-fg': card.fg, '--card-accent': card.accent }}
-      >
+    <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+      <div style={{ '--card-bg': card.bg, '--card-fg': card.fg, '--card-accent': card.accent, pointerEvents: 'none' }}>
         <div className={`fcard-image fcard-image--${card.variant}`}>
-          <ProjectCardArt item={preview} idx={item.order ?? 0} />
+          <ProjectCardArt item={preview} idx={idx} />
         </div>
       </div>
-      <div className="bo-card-controls">
-        <label className="bo-field">
-          <span>Tipo de tarjeta</span>
-          <select value={card.variant} onChange={(e) => set({ variant: e.target.value })}>
-            {CARD_VARIANTS.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
-            {hasPhoto && <option value="photo">Foto (usa la primera)</option>}
-          </select>
-        </label>
-        <div className="bo-colors">
-          {[['bg', 'Fondo'], ['fg', 'Texto'], ['accent', 'Acento']].map(([k, label]) => (
-            <label className="bo-field" key={k}>
-              <span>{label}</span>
-              <input type="color" value={card[k]} onChange={(e) => set({ [k]: e.target.value })} />
-            </label>
-          ))}
-        </div>
-        <div className="bo-presets">
-          <span className="bo-muted">Paletas:</span>
+      <Stack gap="xs">
+        <Select
+          label="Tipo de tarjeta" data={variants} value={variants.some((v) => v.value === card.variant) ? card.variant : 'mark'}
+          allowDeselect={false} onChange={(v) => v && set({ variant: v })}
+        />
+        {COLORS.map(([k, label]) => (
+          <ColorInput
+            key={k} label={label} format="hex" swatches={SWATCHES} swatchesPerRow={7}
+            value={card[k]} onChange={(v) => set({ [k]: v })}
+          />
+        ))}
+        <Text size="sm" fw={500}>Paletas</Text>
+        <Group gap="xs">
           {PALETTE.map(([bg, fg, accent]) => (
-            <button
-              type="button" key={bg + accent} className="bo-swatch" title={`${bg} ${accent}`}
-              style={{ background: `linear-gradient(135deg, ${accent} 50%, ${bg} 50%)`, borderColor: fg }}
+            <UnstyledButton
+              key={bg + accent} title={`${bg} / ${accent}`} aria-label={`Paleta ${bg} ${accent}`}
               onClick={() => set({ bg, fg, accent })}
+              style={{
+                width: 28, height: 28, borderRadius: '50%', border: "2px solid rgba(255,255,255,.45)",
+                background: `linear-gradient(135deg, ${accent} 50%, ${bg} 50%)`,
+              }}
             />
           ))}
-        </div>
-      </div>
-    </div>
+        </Group>
+      </Stack>
+    </SimpleGrid>
   )
 }

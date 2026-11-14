@@ -1,4 +1,4 @@
-import { StrictMode, Suspense, lazy, useEffect, useState } from 'react'
+import { StrictMode, Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -15,8 +15,16 @@ const isAdminRoute = () => {
 
 function Root() {
   const [admin, setAdmin] = useState(isAdminRoute)
+  const wasAdmin = useRef(admin)
   useEffect(() => {
-    const on = () => setAdmin(isAdminRoute())
+    const on = () => {
+      // El CSS global de Mantine queda cargado una vez abierto el admin: al salir recargamos
+      // para que la web pública no herede esos estilos.
+      const now = isAdminRoute()
+      if (wasAdmin.current && !now) window.location.reload()
+      wasAdmin.current = now
+      setAdmin(now)
+    }
     window.addEventListener('hashchange', on)
     return () => window.removeEventListener('hashchange', on)
   }, [])
