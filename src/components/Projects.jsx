@@ -13,7 +13,7 @@ const PALETTE = [
   ['#261c46', '#ffffff', '#7a5cff'],
 ]
 
-const Projects = ({ t }) => {
+const Projects = ({ t, cursorMode = 'ghost' }) => {
   const p = t.projects
 
   // Reveal al entrar en viewport. Las tarjetas son visibles por defecto: solo se ocultan
@@ -52,20 +52,21 @@ const Projects = ({ t }) => {
       raf = 0
       const mid = window.innerHeight * 0.5
       const lr = list.getBoundingClientRect()
-      list.style.setProperty('--spine', `${Math.max(0, Math.min(lr.height, mid - lr.top))}px`)
-      let best = null
-      let bestDist = Infinity
-      cards.forEach((c) => {
-        const r = c.getBoundingClientRect()
-        c.classList.toggle('is-passed', r.top + 30 < mid)
-        const d = Math.abs(r.top + Math.min(r.height, 360) / 2 - mid)
-        if (d < bestDist) { bestDist = d; best = c }
-      })
       const inView = lr.top < mid && lr.bottom > mid
+      // Lecturas primero, escrituras después: evita layout thrashing.
+      const rects = cards.map((c) => c.getBoundingClientRect())
+      let bestIdx = -1
+      let bestDist = Infinity
+      rects.forEach((r, i) => {
+        const d = Math.abs(r.top + Math.min(r.height, 360) / 2 - mid)
+        if (d < bestDist) { bestDist = d; bestIdx = i }
+      })
+      list.style.setProperty('--spine', `${Math.max(0, Math.min(lr.height, mid - lr.top))}px`)
       list.classList.toggle('has-active', inView)
-      cards.forEach((c) => {
-        c.classList.toggle('is-active', inView && c === best)
-        c.classList.toggle('is-dim', inView && c !== best)
+      cards.forEach((c, i) => {
+        c.classList.toggle('is-passed', rects[i].top + 30 < mid)
+        c.classList.toggle('is-active', inView && i === bestIdx)
+        c.classList.toggle('is-dim', inView && i !== bestIdx)
       })
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
@@ -122,7 +123,7 @@ const Projects = ({ t }) => {
           })}
         </ul>
       </div>
-      <HoverCursor label={p.view} />
+      {cursorMode === 'ghost' && <HoverCursor label={p.view} />}
     </section>
   )
 }

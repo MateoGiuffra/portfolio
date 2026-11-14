@@ -71,8 +71,8 @@ const Header = ({ t, onToggleLang }) => {
 
       <nav id="site-menu" className="menu-panel" aria-label="Principal" hidden={!open}>
         <ul className="menu-card menu-links">
-          {items.map(([id, label]) => (
-            <li key={id}>
+          {items.map(([id, label], n) => (
+            <li key={id} style={{ '--n': n }}>
               <a className="roll-host" href={`#${id}`} onClick={() => setOpen(false)}>
                 <span className="sr-only">{label}</span>
                 <RollText text={label} />

@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .env
+.mcp.json
+components.json
+copy.html
+.impeccable/config.json

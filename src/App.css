@@ -20,9 +20,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(240, 240, 255, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(240, 240, 255, 0.96);
 }
 
 .site-header-inner {
@@ -1021,7 +1019,7 @@ html::-webkit-scrollbar {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .fcard-image {
+  html.cursor-mode-ghost .fcard-image {
     cursor: none;
   }
 }
@@ -1134,7 +1132,7 @@ html::-webkit-scrollbar {
   top: 0;
   left: 0;
   right: 0;
-  transition: background 0.35s, backdrop-filter 0.35s;
+  transition: background 0.35s;
 }
 
 .site-header--over {
@@ -1148,9 +1146,8 @@ html::-webkit-scrollbar {
 }
 
 .site-header--over .pill:not(.pill-dark) {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.22);
   color: #fff;
-  backdrop-filter: blur(8px);
 }
 
 .site-header--over .pill:not(.pill-dark):hover {
@@ -1238,26 +1235,44 @@ html::-webkit-scrollbar {
 }
 
 .menu-panel:not([hidden]) .menu-card {
-  animation: menu-card-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: menu-card-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .menu-panel:not([hidden]) .menu-talk {
-  animation-delay: 120ms;
+  animation-delay: 200ms;
 }
 
 .menu-panel:not([hidden]) .menu-social {
-  animation-delay: 180ms;
+  animation-delay: 400ms;
 }
 
 @keyframes menu-card-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(32px) scale(0.92);
+    clip-path: inset(0 0 100% 0 round 18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0 round 18px);
   }
 }
 
 .menu-links {
   padding: 14px 26px;
+}
+
+.menu-panel:not([hidden]) .menu-links li {
+  animation: menu-item-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(120ms + var(--n) * 80ms);
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
 }
 
 .menu-links a {
@@ -1353,7 +1368,8 @@ html::-webkit-scrollbar {
 
 @media (prefers-reduced-motion: reduce) {
   .menu-panel:not([hidden]),
-  .menu-panel:not([hidden]) .menu-card {
+  .menu-panel:not([hidden]) .menu-card,
+  .menu-panel:not([hidden]) .menu-links li {
     animation: none;
   }
 }
@@ -2327,4 +2343,110 @@ html::-webkit-scrollbar {
 
 .ghost-layer.is-suppressed {
   opacity: 0;
+}
+
+/* ===== Fondo: malla de degradés + grano (1) y bloque azul oscuro alternado (3) ===== */
+.sheet {
+  background-color: #f0f0ff;
+  background-image:
+    radial-gradient(ellipse 760px 560px at 92% 980px, rgba(200, 200, 255, 0.65), transparent 70%),
+    radial-gradient(ellipse 820px 600px at 6% 1900px, rgba(190, 222, 255, 0.7), transparent 70%),
+    radial-gradient(ellipse 700px 520px at 88% 2900px, rgba(255, 222, 196, 0.55), transparent 70%),
+    radial-gradient(ellipse 880px 620px at 10% 3900px, rgba(205, 205, 255, 0.65), transparent 70%),
+    radial-gradient(ellipse 760px 560px at 90% 4900px, rgba(190, 222, 255, 0.6), transparent 70%),
+    radial-gradient(ellipse 720px 520px at 8% 5900px, rgba(255, 222, 196, 0.5), transparent 70%);
+  background-repeat: no-repeat;
+}
+
+.sheet::after {
+  content: '';
+  position: absolute;
+  /* El grano arranca debajo de la banda ASCII: así el corte hero → banda queda del mismo color. */
+  top: var(--band-h, 600px);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Habilidades: bloque azul oscuro full-bleed */
+#skills {
+  position: relative;
+  background:
+    radial-gradient(ellipse 900px 520px at 85% 0%, rgba(47, 85, 224, 0.35), transparent 70%),
+    radial-gradient(ellipse 700px 480px at 5% 100%, rgba(143, 176, 240, 0.18), transparent 70%),
+    var(--blueprint-deep);
+  color: var(--on-blueprint);
+}
+
+#skills .skill-rows,
+#skills .skill-row {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+#skills .skill-n {
+  color: var(--on-blueprint-soft);
+}
+
+#skills .skill-chips li {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+#skills .skill-fill {
+  background: #1d4fa8;
+}
+
+/* ---------- Cursor estilo Figma (config en src/config/cursor.js) ---------- */
+html.has-figma-cursor,
+html.has-figma-cursor * {
+  cursor: none !important;
+}
+
+.figma-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  will-change: transform;
+}
+
+.figma-cursor-icon svg {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.28));
+  transition: transform 0.12s;
+}
+
+.figma-cursor.is-down .figma-cursor-icon svg {
+  transform: scale(0.88);
+}
+
+.figma-cursor-tag {
+  display: none;
+  position: absolute;
+  left: 16px;
+  top: 24px;
+  padding: 3px 9px;
+  border-radius: 5px 12px 12px 12px;
+  font: 600 12px/1.3 var(--font-display);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.figma-cursor.has-tag .figma-cursor-tag {
+  display: block;
+}
+
+/* Perf: --spine se actualiza en cada frame de scroll. Registrada como NO heredable, solo
+   se recalcula el propio .featured-list y no todos sus descendientes (cientos de spans de RollText). */
+@property --spine {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
 }

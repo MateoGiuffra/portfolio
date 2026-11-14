@@ -98,7 +98,7 @@ export const content = {
           mark: 'UNQ',
           progress: 0.9,
           progressLabel: 'Último año',
-          tags: ['Haskell', 'Estructuras de datos', 'Concurrencia', 'Patrones de diseño', 'SQL · NoSQL · Grafos', 'SO y redes'],
+          tags: ['POO', 'Estructuras de datos', 'Concurrencia', 'Patrones de diseño', 'SQL · NoSQL · Grafos', 'SO y redes'],
         },
         {
           name: 'AWS Certified Cloud Practitioner',
@@ -294,7 +294,7 @@ export const content = {
           mark: 'UNQ',
           progress: 0.9,
           progressLabel: 'Final year',
-          tags: ['Haskell', 'Data structures', 'Concurrency', 'Design patterns', 'SQL · NoSQL · Graphs', 'OS & networks'],
+          tags: ['OOP', 'Data structures', 'Concurrency', 'Design patterns', 'SQL · NoSQL · Graphs', 'OS & networks'],
         },
         {
           name: 'AWS Certified Cloud Practitioner',

@@ -7,8 +7,9 @@ const BLOCKERS = [
   'a', 'button', 'input', 'textarea',
 ].join(',')
 
-export const useGhostOnBackground = () => {
+export const useGhostOnBackground = (enabled = true) => {
   useEffect(() => {
+    if (!enabled) return
     const layer = document.querySelector('.ghost-layer')
     if (!layer) return
     const onMove = (e) => {
@@ -23,5 +24,5 @@ export const useGhostOnBackground = () => {
       document.removeEventListener('pointerleave', onLeave)
       layer.classList.remove('is-suppressed')
     }
-  }, [])
+  }, [enabled])
 }

@@ -1,9 +1,12 @@
+import { useEffect } from 'react'
 import './App.css'
 import { useLang } from './i18n/useLang'
 import Header from './components/Header'
 import { useReveal } from './components/useReveal'
 import { useGhostOnBackground } from './components/useGhostOnBackground'
 import GhostCursor from './components/GhostCursor'
+import FigmaCursor from './components/FigmaCursor'
+import { cursorConfig } from './config/cursor'
 import SmoothScroll from './components/SmoothScroll'
 import Hero from './components/Hero'
 import GradientASCII from './components/GradientASCII'
@@ -16,32 +19,41 @@ import Contact from './components/Contact'
 function App() {
   const { lang, t, toggle } = useLang()
   useReveal(lang)
-  useGhostOnBackground()
+  const mode = cursorConfig.mode
+  useGhostOnBackground(mode === 'ghost')
+  useEffect(() => {
+    const cls = `cursor-mode-${mode}`
+    document.documentElement.classList.add(cls)
+    return () => document.documentElement.classList.remove(cls)
+  }, [mode])
 
   return (
     <>
       <a className="skip-link" href="#experience">{t.skip}</a>
       <SmoothScroll />
-      <div className="ghost-layer" aria-hidden="true">
-        <GhostCursor
-          color="#B497CF"
-          size={41}
-          trailLength={15}
-          inertia={0.32}
-          turbulence={1.15}
-          drift={-0.6}
-          bloomStrength={0.35}
-          grainIntensity={0.09}
-          detail={0.35}
-          brightness={0.25}
-          bloomRadius={0.15}
-          edgeIntensity={0}
-          fadeDelayMs={500}
-          fadeDurationMs={400}
-          clickPuff
-          intro
-        />
-      </div>
+      {mode === 'ghost' && (
+        <div className="ghost-layer" aria-hidden="true">
+          <GhostCursor
+            color="#B497CF"
+            size={41}
+            trailLength={15}
+            inertia={0.32}
+            turbulence={1.15}
+            drift={-0.6}
+            bloomStrength={0.35}
+            grainIntensity={0.09}
+            detail={0.35}
+            brightness={0.25}
+            bloomRadius={0.15}
+            edgeIntensity={0}
+            fadeDelayMs={500}
+            fadeDurationMs={400}
+            clickPuff
+            intro
+          />
+        </div>
+      )}
+      {mode === 'figma' && <FigmaCursor {...cursorConfig.figma} />}
       <Header t={t} onToggleLang={toggle} />
       <main>
         <Hero t={t} lang={lang} />
@@ -70,7 +82,7 @@ function App() {
             />
           </div>
           <Experience t={t} />
-          <Projects t={t} />
+          <Projects t={t} cursorMode={mode} />
           <Work t={t} />
           <Skills t={t} />
           <Contact t={t} />
