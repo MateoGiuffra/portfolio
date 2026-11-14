@@ -31,5 +31,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      # gh-pages clona el repo por su cuenta y no hereda las credenciales del checkout,
+      # por eso el token va en la URL del remoto (GitHub lo enmascara en los logs).
       - name: Publicar dist/ en gh-pages
-        run: npx gh-pages -d dist -u "github-actions <github-actions@users.noreply.github.com>"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx gh-pages -d dist -u "github-actions <github-actions@users.noreply.github.com>" -r "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
