@@ -1,0 +1,33 @@
+name: Deploy a GitHub Pages
+
+# Cada push a main compila el sitio y lo publica en la rama gh-pages
+# (la misma que antes se publicaba a mano con `npm run deploy`).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Si entran dos pushes seguidos, se cancela el deploy viejo y queda el último.
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # `npm run deploy` hace el build (predeploy) y publica dist/ en gh-pages.
+      - name: Build y publicar
+        run: npm run deploy -- -u "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
