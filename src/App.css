@@ -382,24 +382,26 @@ h3 {
 }
 
 .work-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 1.6vw, 24px);
+  display: block;
 }
 
+/* Tarjetas apiladas: cada una queda pegada más abajo que la anterior y la tapa al scrollear. */
 .work-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(48px, 8vw, 120px);
-  min-height: 380px;
-  padding: clamp(22px, 2.4vw, 36px);
-  border-radius: 24px;
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  position: sticky;
+  top: calc(96px + var(--i) * 28px);
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  align-items: end;
+  gap: clamp(16px, 4vw, 64px);
+  min-height: clamp(300px, 36vw, 440px);
+  margin-bottom: clamp(24px, 4vw, 56px);
+  padding: clamp(22px, 3vw, 48px);
+  border-radius: 28px;
+  box-shadow: 0 -12px 40px rgba(10, 10, 20, 0.12);
 }
 
-.work-card:hover {
-  transform: translateY(-8px);
+.work-card:last-child {
+  margin-bottom: 0;
 }
 
 .card-navy {
@@ -418,9 +420,10 @@ h3 {
 }
 
 .work-num {
+  align-self: start;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  font-size: clamp(4rem, 12vw, 11rem);
   line-height: 1;
   letter-spacing: -0.04em;
   opacity: 0.9;
@@ -440,12 +443,11 @@ h3 {
   opacity: 0.8;
 }
 
-@media (max-width: 960px) {
-  .work-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 760px) {
   .work-card {
-    min-height: 0;
+    grid-template-columns: 1fr;
+    align-items: start;
+    min-height: 300px;
   }
 }
 
@@ -1036,30 +1038,65 @@ html::-webkit-scrollbar {
   }
 }
 
-/* ---------- Screen paint (canvas WebGL) ---------- */
-.hero,
-.featured {
-  position: relative;
-  isolation: isolate;
-}
-
-.screen-paint {
-  position: absolute;
+/* ---------- Estela de cursor (GhostCursor, react-bits) ---------- */
+.ghost-layer {
+  position: fixed;
   inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 35;
   pointer-events: none;
 }
 
-.hero-inner,
-.featured-inner {
-  position: relative;
-  z-index: 1;
+/* ---------- Hero shrink ---------- */
+.hero {
+  transform-origin: center top;
+  will-change: transform;
 }
 
-.screen-paint--light {
-  mix-blend-mode: multiply;
+.hero-inner {
+  opacity: var(--hero-fade, 1);
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  overflow: hidden;
+  padding: clamp(40px, 6vw, 90px) 0;
+  user-select: none;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-set {
+  display: flex;
+  flex: none;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  padding-right: clamp(20px, 3vw, 48px);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3.5rem, 10vw, 10rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.marquee-item i {
+  font-style: normal;
+  font-size: 0.45em;
+  color: var(--signal);
+}
+
+.marquee--outline .marquee-item {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
 }
 
 /* Mientras se arrastra la barra: sin selección de texto ni cursores de hover. */
@@ -1067,4 +1104,35 @@ html::-webkit-scrollbar {
 .is-scrollbar-dragging * {
   user-select: none !important;
   cursor: grabbing !important;
+}
+
+/* ---------- Hero con fondo GradientASCII (react-bits) ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(560px, 86vh, 900px);
+  display: grid;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Velo para que el texto se lea sobre las zonas claras del degradé. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(8, 29, 68, 0.88) 0%, rgba(8, 29, 68, 0.55) 45%, rgba(8, 29, 68, 0.1) 100%),
+    linear-gradient(0deg, rgba(8, 29, 68, 0.55) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  align-self: center;
+  width: 100%;
 }

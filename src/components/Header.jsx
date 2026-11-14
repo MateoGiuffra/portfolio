@@ -7,9 +7,9 @@ const Header = ({ t, onToggleLang }) => (
       <nav aria-label="Principal">
         <ul className="nav-list">
           {[
-            ['work', t.nav.work],
             ['experience', t.nav.experience],
             ['projects', t.nav.projects],
+            ['work', t.nav.work],
             ['skills', t.nav.skills],
           ].map(([id, label]) => (
             <li key={id}>

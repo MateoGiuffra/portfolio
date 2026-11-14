@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import ScreenPaint from './ScreenPaint'
 import RollText from './RollText'
 import HoverCursor from './HoverCursor'
 
@@ -44,7 +43,6 @@ const Projects = ({ t }) => {
 
   return (
     <section id="projects" className="featured" aria-labelledby="projects-title">
-      <ScreenPaint className="screen-paint--light" strength={0.9} />
       <div className="featured-inner">
         <div className="featured-top">
           <h2 id="projects-title" className="featured-title">{p.title}</h2>

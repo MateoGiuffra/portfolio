@@ -8,7 +8,11 @@ const Work = ({ t }) => (
   <Section id="work" title={t.work.title} wide>
     <ul className="work-grid">
       {t.work.items.map((item, i) => (
-        <li className={`work-card roll-host ${TONES[i % TONES.length]}`} key={item.title}>
+        <li
+          className={`work-card roll-host ${TONES[i % TONES.length]}`}
+          key={item.title}
+          style={{ '--i': i }}
+        >
           <span className="work-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <div>
             <h3 className="work-card-title">
