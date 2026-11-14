@@ -32,4 +32,4 @@ jobs:
         run: npm run build
 
       - name: Publicar dist/ en gh-pages
-        run: npx gh-pages -d dist -u "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+        run: npx gh-pages -d dist -u "github-actions <github-actions@users.noreply.github.com>"
