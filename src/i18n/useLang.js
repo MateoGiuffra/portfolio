@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { content } from './content'
+import { useContent } from '../services/useContent'
 
 const STORAGE_KEY = 'portfolio-lang'
 
@@ -14,6 +14,7 @@ function initialLang() {
 }
 
 export function useLang() {
+  const content = useContent()
   const [lang, setLang] = useState(initialLang)
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export function useLang() {
     } catch {
       // ignorar
     }
-  }, [lang])
+  }, [lang, content])
 
   const toggle = useCallback(() => setLang((l) => (l === 'es' ? 'en' : 'es')), [])
 

@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['matteogiuffrah40@gmail.com', 'mgiuffra@mobeats.io']
+        && request.auth.token.email_verified == true;
+    }
+
+    // El portfolio es público: cualquiera lee el contenido. Solo los admins escriben.
+    match /{collection}/{doc} {
+      allow read: if collection in ['content', 'workItems', 'jobs', 'education', 'skillGroups', 'projects'];
+      allow write: if isAdmin()
+        && collection in ['content', 'workItems', 'jobs', 'education', 'skillGroups', 'projects'];
+    }
+  }
+}

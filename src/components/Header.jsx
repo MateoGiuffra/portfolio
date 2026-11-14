@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import RollText from './RollText'
-import { LINKS } from '../i18n/content'
+import { useContent } from '../services/useContent'
 
 // Transparente y flotando sobre el hero; al salir del hero vuelve al fondo sólido.
 const useOverHero = () => {
@@ -23,6 +23,7 @@ const useOverHero = () => {
 
 // Menú desplegable estilo lusion.co: todo el listado queda dentro del panel.
 const Header = ({ t, onToggleLang }) => {
+  const { links: LINKS } = useContent()
   const over = useOverHero()
   const [open, setOpen] = useState(false)
 

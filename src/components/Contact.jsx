@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { Toaster, toast } from 'react-hot-toast'
 import Section from './Section'
-import { LINKS } from '../i18n/content'
+import { useContent } from '../services/useContent'
 
 // El formulario solo se muestra si el build recibió las claves de EmailJS (.env).
 const emailjsReady = Boolean(
@@ -12,6 +12,7 @@ const emailjsReady = Boolean(
 )
 
 const Contact = ({ t }) => {
+  const { links: LINKS } = useContent()
   const c = t.contact
   const formRef = useRef(null)
   const [isSending, setIsSending] = useState(false)

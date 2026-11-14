@@ -1,9 +1,11 @@
 import GradientASCII from './GradientASCII'
 import RollText from './RollText'
-import { CV_FILES, LINKS } from '../i18n/content'
+import { useContent } from '../services/useContent'
 
 // Hero a pantalla completa: fondo GradientASCII con el texto abajo a la izquierda.
-const Hero = ({ t, lang }) => (
+const Hero = ({ t, lang }) => {
+  const { links: LINKS, cv } = useContent()
+  return (
   <section id="top" className="hero hero--full">
     <div className="hero-bg" aria-hidden="true">
       <GradientASCII
@@ -37,7 +39,7 @@ const Hero = ({ t, lang }) => (
         <div className="hero-actions">
           <a
             className="btn btn-primary roll-host"
-            href={`${import.meta.env.BASE_URL}${CV_FILES[lang]}`}
+            href={`${import.meta.env.BASE_URL}${cv[lang]}`}
             download
           >
             <span className="sr-only">{t.hero.cv}</span>
@@ -55,6 +57,7 @@ const Hero = ({ t, lang }) => (
       </div>
     </div>
   </section>
-)
+  )
+}
 
 export default Hero

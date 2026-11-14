@@ -1,17 +1,8 @@
 import { useEffect } from 'react'
 import RollText from './RollText'
 import HoverCursor from './HoverCursor'
-
-// Paleta por tarjeta: [fondo, texto, acento del degradé].
-const PALETTE = [
-  ['#1a1411', '#ffedd7', '#c4793a'],
-  ['#181818', '#fffde0', '#6b8fb5'],
-  ['#121414', '#ffffff', '#2f6f8f'],
-  ['#111a13', '#d9f3de', '#4f8a5b'],
-  ['#e3e3f8', '#000000', '#a9a9f0'],
-  ['#efd5d3', '#000000', '#e39a94'],
-  ['#261c46', '#ffffff', '#7a5cff'],
-]
+import ProjectCardArt from './ProjectCardArt'
+import { cardOf } from '../config/cardPalette'
 
 const Projects = ({ t, cursorMode = 'ghost' }) => {
   const p = t.projects
@@ -90,23 +81,22 @@ const Projects = ({ t, cursorMode = 'ghost' }) => {
         </div>
         <ul className="featured-list">
           {p.items.map((item, idx) => {
-            const [bg, fg, accent] = PALETTE[idx % PALETTE.length]
+            const card = cardOf(item, idx)
             return (
               <li
                 className="fcard roll-host"
                 key={item.title}
-                style={{ '--card-bg': bg, '--card-fg': fg, '--card-accent': accent }}
+                style={{ '--card-bg': card.bg, '--card-fg': card.fg, '--card-accent': card.accent }}
               >
                 <a
-                  className="fcard-image"
+                  className={`fcard-image fcard-image--${card.variant}`}
                   data-cursor
                   href={item.demo || item.code}
                   target="_blank"
                   rel="noreferrer"
                   aria-label={item.title}
                 >
-                  <span className="fcard-mark" aria-hidden="true">{item.title}</span>
-                  <span className="fcard-num" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
+                  <ProjectCardArt item={item} idx={idx} />
                 </a>
                 <div className="fcard-line1">{item.stack.join(' • ')}</div>
                 <h3 className="fcard-title">

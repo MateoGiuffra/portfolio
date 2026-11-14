@@ -2462,3 +2462,56 @@ html.has-figma-cursor * {
   inherits: false;
   initial-value: 0px;
 }
+
+/* ---- Variantes de tarjeta de proyecto (se eligen en el backoffice) ---- */
+.fcard-image--gradient {
+  background: linear-gradient(135deg, var(--card-accent) 0%, var(--card-bg) 85%);
+}
+.fcard-image--solid {
+  background: var(--card-bg);
+}
+.fcard-image--pattern {
+  background: var(--card-bg);
+}
+.fcard-ascii {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  font: 700 clamp(9px, 1.15vw, 15px) / 1.25 var(--font-mono, ui-monospace, monospace);
+  color: var(--card-accent);
+  opacity: 0.55;
+  white-space: pre;
+  overflow: hidden;
+}
+.fcard-mark--small {
+  font-size: clamp(1.2rem, 2.6vw, 2.2rem);
+  text-shadow: 0 2px 24px var(--card-bg), 0 0 8px var(--card-bg);
+}
+.fcard-mark--mono {
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  letter-spacing: -0.04em;
+}
+.fcard-stack {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0 8%;
+  display: grid;
+  align-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2.4vw, 2.2rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.fcard-stack li:nth-child(odd) { color: var(--card-accent); }
+.fcard-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
