@@ -1,37 +1,10 @@
-import { useEffect, useRef } from 'react'
 import GradientASCII from './GradientASCII'
 import RollText from './RollText'
-import ArchitectureDiagram from './ArchitectureDiagram'
 import { CV_FILES, LINKS } from '../i18n/content'
 
-// El hero se achica, se redondea y se desvanece a medida que se scrollea la primera pantalla.
-const useHeroShrink = (ref) => {
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const el = ref.current
-    let raf = 0
-    const apply = () => {
-      raf = 0
-      const p = Math.min(Math.max(window.scrollY / (el.offsetHeight * 0.9), 0), 1)
-      el.style.transform = `translate3d(0, ${p * 36}px, 0) scale(${1 - p * 0.1})`
-      el.style.borderRadius = `${24 + p * 48}px`
-      el.style.setProperty('--hero-fade', String(1 - p * 0.75))
-    }
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply) }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    apply()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(raf)
-    }
-  }, [ref])
-}
-
-const Hero = ({ t, lang }) => {
-  const ref = useRef(null)
-  useHeroShrink(ref)
-  return (
-  <section id="top" className="hero" ref={ref}>
+// Hero a pantalla completa: fondo GradientASCII con el texto abajo a la izquierda.
+const Hero = ({ t, lang }) => (
+  <section id="top" className="hero hero--full">
     <div className="hero-bg" aria-hidden="true">
       <GradientASCII
         colors={['#1e3fd8', '#f6f8ff', '#a5d8ff', '#38bdf8']}
@@ -57,7 +30,7 @@ const Hero = ({ t, lang }) => {
         lightMode={false}
       />
     </div>
-    <div className="hero-inner">
+    <div className="hero-inner hero-inner--full">
       <div className="hero-copy">
         <h1>{t.hero.title}</h1>
         <p className="hero-text">{t.hero.text}</p>
@@ -80,12 +53,8 @@ const Hero = ({ t, lang }) => {
           <li><a href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
         </ul>
       </div>
-      <div className="hero-figure">
-        <ArchitectureDiagram hero={t.hero} />
-      </div>
     </div>
   </section>
-  )
-}
+)
 
 export default Hero

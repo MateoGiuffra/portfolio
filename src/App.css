@@ -390,10 +390,9 @@ h3 {
   position: sticky;
   top: calc(96px + var(--i) * 28px);
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-  align-items: end;
-  gap: clamp(16px, 4vw, 64px);
-  min-height: clamp(300px, 36vw, 440px);
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 64px);
   margin-bottom: clamp(24px, 4vw, 56px);
   padding: clamp(22px, 3vw, 48px);
   border-radius: 28px;
@@ -420,10 +419,9 @@ h3 {
 }
 
 .work-num {
-  align-self: start;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(4rem, 12vw, 11rem);
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
   line-height: 1;
   letter-spacing: -0.04em;
   opacity: 0.9;
@@ -445,9 +443,11 @@ h3 {
 
 @media (max-width: 760px) {
   .work-card {
-    grid-template-columns: 1fr;
-    align-items: start;
-    min-height: 300px;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+  }
+  .work-num {
+    font-size: 3rem;
   }
 }
 
@@ -1056,49 +1056,6 @@ html::-webkit-scrollbar {
   opacity: var(--hero-fade, 1);
 }
 
-/* ---------- Marquee ---------- */
-.marquee {
-  overflow: hidden;
-  padding: clamp(40px, 6vw, 90px) 0;
-  user-select: none;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-
-.marquee-set {
-  display: flex;
-  flex: none;
-}
-
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(20px, 3vw, 48px);
-  padding-right: clamp(20px, 3vw, 48px);
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(3.5rem, 10vw, 10rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
-  text-transform: uppercase;
-}
-
-.marquee-item i {
-  font-style: normal;
-  font-size: 0.45em;
-  color: var(--signal);
-}
-
-.marquee--outline .marquee-item {
-  color: transparent;
-  -webkit-text-stroke: 2px var(--ink);
-}
-
 /* Mientras se arrastra la barra: sin selección de texto ni cursores de hover. */
 .is-scrollbar-dragging,
 .is-scrollbar-dragging * {
@@ -1135,4 +1092,1239 @@ html::-webkit-scrollbar {
 .hero-inner {
   align-self: center;
   width: 100%;
+}
+
+/* ---------- Hero a pantalla completa + navbar transparente ---------- */
+.hero--full {
+  margin: 0;
+  border-radius: 0;
+  min-height: 100svh;
+  background: var(--blueprint-deep);
+  transform: none !important;
+}
+
+.hero--full::before {
+  background:
+    linear-gradient(180deg, rgba(8, 29, 68, 0.55) 0%, transparent 24%),
+    linear-gradient(0deg, rgba(8, 29, 68, 0.78) 0%, rgba(8, 29, 68, 0.35) 45%, transparent 75%);
+}
+
+/* Texto anclado abajo a la izquierda, sobre la zona oscura del degradé. */
+.hero--full {
+  align-items: end;
+}
+
+.hero-inner--full {
+  display: block;
+  align-self: end;
+  padding: 120px var(--gutter) clamp(40px, 7vw, 96px);
+  max-width: none;
+}
+
+.hero-inner--full .hero-copy {
+  max-width: 62rem;
+}
+
+.hero-inner--full h1 {
+  font-size: clamp(2.6rem, 6.8vw, 6rem);
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: background 0.35s, backdrop-filter 0.35s;
+}
+
+.site-header--over {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-header--over .brand {
+  color: #fff;
+}
+
+.site-header--over .pill:not(.pill-dark) {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+.site-header--over .pill:not(.pill-dark):hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ---------- Menú desplegable (estilo lusion.co) ---------- */
+.nav-list {
+  display: none;
+}
+
+.site-header-inner {
+  justify-content: flex-end;
+}
+
+.pill-menu {
+  background: #fff;
+  color: var(--ink);
+  min-width: 112px;
+  justify-content: space-between;
+}
+
+.site-header--over .pill-menu,
+.site-header--over .pill-menu:hover {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  backdrop-filter: none;
+}
+
+.menu-dots {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.menu-dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.is-open .menu-dots {
+  flex-direction: row;
+}
+
+.menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  border: 0;
+  background: rgba(8, 12, 30, 0.25);
+  cursor: default;
+}
+
+.menu-panel {
+  position: absolute;
+  top: calc(100% - 6px);
+  right: var(--gutter);
+  width: min(380px, calc(100vw - 2 * var(--gutter)));
+  display: grid;
+  gap: 10px;
+  transform-origin: top right;
+}
+
+.menu-panel[hidden] {
+  display: none;
+}
+
+.menu-panel:not([hidden]) {
+  animation: menu-in 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.96);
+  }
+}
+
+.menu-card {
+  border-radius: 18px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.menu-panel:not([hidden]) .menu-card {
+  animation: menu-card-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.menu-panel:not([hidden]) .menu-talk {
+  animation-delay: 120ms;
+}
+
+.menu-panel:not([hidden]) .menu-social {
+  animation-delay: 180ms;
+}
+
+@keyframes menu-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.menu-links {
+  padding: 14px 26px;
+}
+
+.menu-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.menu-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink);
+  transform: scale(0);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.menu-links a:hover .menu-dot,
+.menu-links a:focus-visible .menu-dot {
+  transform: scale(1);
+}
+
+.menu-talk {
+  display: grid;
+  gap: 18px;
+  padding: 26px;
+}
+
+.menu-talk p {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.menu-mail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  text-decoration: none;
+  transition: background 0.25s;
+}
+
+.menu-mail:hover {
+  background: #e4e4f3;
+}
+
+.menu-lang {
+  justify-self: start;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: #e4e4f3;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.menu-social {
+  display: grid;
+  background: #000;
+  color: #fff;
+  padding: 6px 22px;
+}
+
+.menu-social a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.menu-social a + a {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel:not([hidden]),
+  .menu-panel:not([hidden]) .menu-card {
+    animation: none;
+  }
+}
+
+.site-header.is-open {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ---------- Hero fijo + "hoja" que sube tapándolo con degradé ---------- */
+.sheet {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+}
+
+/* ---------- Experiencia: línea de tiempo inicio → hoy ---------- */
+.tl {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tl-end {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tl-end small {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-blueprint-soft);
+}
+
+.tl-end b {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.1rem, 1.7vw, 1.55rem);
+  letter-spacing: -0.02em;
+}
+
+.tl-now {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.tl-line {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: rgba(143, 176, 240, 0.28);
+}
+
+.tl-line i {
+  position: absolute;
+  inset: 0;
+  background: var(--signal);
+  transform-origin: left;
+  animation: tl-grow 1.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.tl-line::before,
+.tl-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 50%;
+}
+
+.tl-line::before {
+  left: -2px;
+  background: var(--blueprint);
+  border: 2px solid var(--signal);
+}
+
+.tl-line::after {
+  right: -2px;
+  background: var(--signal);
+  animation: tl-pulse 1.8s ease-out infinite;
+}
+
+@keyframes tl-grow {
+  from { transform: scaleX(0); }
+}
+
+@keyframes tl-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 180, 0, 0.55); }
+  100% { box-shadow: 0 0 0 14px rgba(255, 180, 0, 0); }
+}
+
+@supports (animation-timeline: view()) {
+  .tl-line i {
+    animation: tl-grow linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 40%;
+  }
+}
+
+.exp-live {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(143, 176, 240, 0.16);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.exp-live i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: tl-live 1.6s ease-out infinite;
+}
+
+@keyframes tl-live {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+  100% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+}
+
+/* ---------- Formación: tarjetas personalizadas ---------- */
+.edu-card {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(280px, 26vw, 340px);
+  gap: 8px;
+}
+
+.edu-navy {
+  background: var(--blueprint);
+  color: var(--on-blueprint);
+}
+
+.edu-amber {
+  background: var(--signal);
+  color: var(--signal-ink);
+}
+
+.edu-mark {
+  position: absolute;
+  right: -0.04em;
+  top: -0.14em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(7rem, 14vw, 13rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  opacity: 0.09;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+}
+
+.edu-card:hover .edu-mark {
+  transform: translate(-10px, 10px) scale(1.04);
+  opacity: 0.14;
+}
+
+.edu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: auto;
+}
+
+.edu-kind {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.edu-card .edu-chip {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
+}
+
+.edu-amber .edu-chip {
+  background: rgba(26, 18, 0, 0.1);
+}
+
+.edu-card .edu-meta {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.edu-progress {
+  width: 100%;
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.edu-bar {
+  display: block;
+  height: 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.edu-bar i {
+  display: block;
+  height: 100%;
+  width: calc(var(--p) * 100%);
+  border-radius: 6px;
+  background: var(--signal);
+  transform-origin: left;
+  animation: tl-grow 1.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.edu-progress small {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.edu-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.edu-tags li {
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.edu-amber .edu-tags li {
+  background: rgba(26, 18, 0, 0.1);
+}
+
+/* ---------- Proyectos: columna vertebral ---------- */
+.featured-list {
+  position: relative;
+  --colgap: clamp(44px, 6vw, 92px);
+  column-gap: var(--colgap);
+}
+
+.featured-list::before,
+.featured-list::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 2px;
+}
+
+.featured-list::before {
+  bottom: 0;
+  background: var(--paper-edge);
+}
+
+.featured-list::after {
+  height: var(--spine, 0px);
+  background: linear-gradient(180deg, var(--blueprint), var(--signal));
+}
+
+.fcard {
+  position: relative;
+}
+
+/* Rama horizontal + nodo que une cada tarjeta con la columna. */
+.fcard::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  width: calc(var(--colgap) / 2);
+  height: 2px;
+  background: var(--paper-edge);
+  transition: background 0.5s;
+}
+
+.fcard::after {
+  content: '';
+  position: absolute;
+  top: 23px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--paper-edge);
+  transition: background 0.5s, border-color 0.5s, box-shadow 0.5s, transform 0.5s;
+}
+
+.fcard:nth-child(odd)::before { left: 100%; }
+.fcard:nth-child(even)::before { right: 100%; }
+.fcard:nth-child(odd)::after { left: calc(100% + var(--colgap) / 2 - 8px); }
+.fcard:nth-child(even)::after { right: calc(100% + var(--colgap) / 2 - 8px); }
+
+.fcard.is-passed::before { background: var(--blueprint); }
+.fcard.is-passed::after { background: var(--blueprint); border-color: var(--blueprint); }
+
+.fcard.is-active::after {
+  background: var(--signal);
+  border-color: var(--signal);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 8px rgba(255, 180, 0, 0.25);
+}
+
+/* Las demás tarjetas se atenúan pero siguen visibles. */
+.fcard > * {
+  transition: opacity 0.5s;
+}
+
+.fcard > .fcard-image {
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), border-radius 0.5s, opacity 0.5s;
+}
+
+.fcard.is-dim > * {
+  opacity: 0.4;
+}
+
+.fcard.is-dim:hover > * {
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .featured-list::before,
+  .featured-list::after {
+    left: 10px;
+  }
+  .fcard {
+    padding-left: 38px;
+  }
+  .fcard::before {
+    left: 10px !important;
+    right: auto !important;
+    width: 28px;
+  }
+  .fcard::after {
+    left: 2px !important;
+    right: auto !important;
+  }
+}
+
+/* ---------- Habilidades: filas que se llenan al pasar el mouse ---------- */
+.skill-rows {
+  border-top: 1px solid var(--paper-edge);
+}
+
+.skill-row {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 4fr) minmax(0, 7fr) auto;
+  align-items: center;
+  gap: clamp(12px, 2vw, 32px);
+  padding: clamp(20px, 2.6vw, 36px) clamp(8px, 1.5vw, 24px);
+  border-bottom: 1px solid var(--paper-edge);
+  outline-offset: -3px;
+  transition: color 0.5s, padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--blueprint);
+  transform: translateY(101%);
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.skill-row > *:not(.skill-fill) {
+  position: relative;
+  z-index: 1;
+}
+
+.skill-row:hover,
+.skill-row:focus-visible {
+  color: #fff;
+  padding-left: clamp(20px, 3vw, 44px);
+}
+
+.skill-row:hover .skill-fill,
+.skill-row:focus-visible .skill-fill {
+  transform: translateY(0);
+}
+
+.skill-n {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: color 0.5s;
+}
+
+.skill-name {
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.2vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-chips li {
+  padding: 7px 14px;
+  border: 1px solid rgba(10, 10, 20, 0.2);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 1.2;
+  transition: border-color 0.5s;
+}
+
+.skill-row:hover .skill-n,
+.skill-row:focus-visible .skill-n {
+  color: var(--signal);
+}
+
+.skill-row:hover .skill-chips li,
+.skill-row:focus-visible .skill-chips li {
+  border-color: rgba(255, 255, 255, 0.4);
+  animation: chip-pop 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--k) * 35ms + 120ms);
+}
+
+@keyframes chip-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.skill-total {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: -0.03em;
+  opacity: 0.25;
+}
+
+@media (max-width: 860px) {
+  .skill-row {
+    grid-template-columns: 36px minmax(0, 1fr);
+    row-gap: 14px;
+  }
+  .skill-chips {
+    grid-column: 2;
+  }
+  .skill-total {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-fill,
+  .tl-line i,
+  .edu-bar i {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* UNQ: rojo institucional */
+.edu-red {
+  background: #d3202f;
+  color: #fff;
+}
+
+.edu-red .edu-bar i {
+  background: #fff;
+}
+
+/* ---------- Banda ASCII invertida al inicio de Experiencia ---------- */
+.sheet > .section,
+.sheet > .featured {
+  position: relative;
+  z-index: 1;
+}
+
+.ascii-band {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(420px, 70vh, 640px);
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+
+/* Invertido: lo que en el hero era el cielo claro queda abajo. */
+.ascii-band > * {
+  transform: scaleY(-1);
+}
+
+/* Arranca en el azul oscuro con el que termina el hero. */
+.ascii-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--blueprint-deep) 0%, rgba(8, 29, 68, 0.85) 18%, rgba(8, 29, 68, 0) 70%);
+}
+
+/* El título queda sobre el extremo claro de la banda. */
+#experience {
+  padding-top: clamp(280px, 46vh, 460px);
+}
+
+/* Ajuste: fondo azul sólido arriba, el ASCII aparece progresivamente (sin niebla gris). */
+.ascii-band {
+  height: clamp(380px, 62vh, 600px);
+  background: var(--blueprint-deep);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+
+.ascii-band::after {
+  display: none;
+}
+
+.ascii-band > * {
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 45%, transparent 85%);
+  mask-image: linear-gradient(to top, #000 0%, #000 45%, transparent 85%);
+}
+
+#experience {
+  padding-top: clamp(220px, 36vh, 380px);
+}
+
+.ascii-band {
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+}
+
+.ascii-band > * {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 15%, #000 62%);
+  mask-image: linear-gradient(to bottom, transparent 15%, #000 62%);
+}
+
+#experience {
+  padding-top: clamp(280px, 44vh, 440px);
+}
+
+/* Versión final: el degradé multiplica al ASCII (oscuro → azul saturado → celeste/blanco), sin niebla gris. */
+.ascii-band {
+  height: clamp(420px, 70vh, 640px);
+  background: var(--blueprint-deep);
+  isolation: isolate;
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+}
+
+.ascii-band > * {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.ascii-band::after {
+  display: block;
+  background: linear-gradient(180deg, #081d44 0%, #0b2a7a 35%, #6f96ff 62%, #ffffff 85%);
+  mix-blend-mode: multiply;
+}
+
+#experience {
+  padding-top: clamp(260px, 42vh, 420px);
+}
+
+.ascii-band {
+  background: #0a1f48;
+}
+
+.ascii-band::after {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 10%, #2f55e0 45%, #8fb2ff 66%, #ffffff 86%);
+}
+
+/* Costura exacta: el hero termina en #0a1f48 sólido y la banda arranca con ese mismo color. */
+.hero--full::before {
+  background:
+    linear-gradient(180deg, rgba(8, 29, 68, 0.55) 0%, transparent 24%),
+    linear-gradient(0deg, #0a1f48 0%, rgba(10, 31, 72, 0.78) 14%, rgba(10, 31, 72, 0.35) 45%, transparent 75%);
+}
+
+.ascii-band > * {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 8%, #000 30%);
+}
+
+#experience {
+  padding-top: clamp(340px, 54vh, 540px);
+}
+
+.ascii-band::after {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 8%, #2f55e0 28%, #8fb2ff 46%, #ffffff 62%);
+}
+
+.ascii-band {
+  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 66%, transparent 98%);
+}
+
+/* La banda termina exactamente donde empieza el título: ahí el fondo ya es blanco. */
+.sheet {
+  --band-h: clamp(380px, 62vh, 600px);
+}
+
+.ascii-band {
+  height: var(--band-h);
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+.ascii-band::after {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 6%, #2f55e0 32%, #8fb2ff 55%, #ffffff 80%);
+}
+
+#experience {
+  padding-top: calc(var(--band-h) - 40px);
+}
+
+/* ============ CONSTANTES DE LA BANDA ASCII (tocar solo acá) ============
+   --band-h      (derivado) alto de la banda = --title-start, no tocar
+   --title-start distancia desde el fin del hero hasta "Experiencia y formación"
+                 (bajalo para que el título suba, subilo para dejar más azul arriba) */
+.sheet {
+  --band-h: clamp(380px, 62vh, 600px);
+  --title-start: clamp(260px, 40vh, 400px);
+}
+
+.ascii-band {
+  height: var(--band-h);
+}
+
+#experience {
+  padding-top: var(--title-start);
+}
+
+/* REGLA: la banda termina exactamente donde empieza el título (fondo blanco al arrancar).
+   Una sola constante: --title-start. Alto de banda = --title-start, siempre. */
+.sheet {
+  --title-start: clamp(380px, 62vh, 600px);
+  --band-h: var(--title-start);
+}
+
+.ascii-band {
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+}
+
+.ascii-band::after {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 6%, #2f55e0 30%, #8fb2ff 50%, #ffffff 72%);
+}
+
+/* ===== Banda ASCII v3: degradés sólidos y suaves, sin blend ni máscaras =====
+   Arriba: #0a1f48 (mismo color con el que termina el hero). Abajo: papel (#f0f0ff). */
+.ascii-band {
+  background: #0a1f48;
+  isolation: auto;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.ascii-band > * {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.ascii-band::after {
+  display: block;
+  mix-blend-mode: normal;
+  background:
+    /* abajo: del ASCII celeste al papel */
+    linear-gradient(180deg,
+      rgba(240, 240, 255, 0) 45%,
+      rgba(240, 240, 255, 0.08) 55%,
+      rgba(240, 240, 255, 0.25) 65%,
+      rgba(240, 240, 255, 0.5) 75%,
+      rgba(240, 240, 255, 0.78) 86%,
+      rgba(240, 240, 255, 0.95) 94%,
+      rgb(240, 240, 255) 100%),
+    /* arriba: del azul del hero al ASCII */
+    linear-gradient(180deg,
+      rgb(10, 31, 72) 0%,
+      rgba(10, 31, 72, 0.94) 10%,
+      rgba(10, 31, 72, 0.8) 20%,
+      rgba(10, 31, 72, 0.58) 32%,
+      rgba(10, 31, 72, 0.34) 44%,
+      rgba(10, 31, 72, 0.14) 56%,
+      rgba(10, 31, 72, 0) 68%);
+}
+
+/* ===== v4: el ASCII invertido arranca de una, sin zona azul vacía arriba =====
+   Se recorta la parte vacía del shader subiéndolo y estirándolo. --ascii-skip = cuánto se recorta (0 a 0.6). */
+.sheet {
+  --ascii-skip: 0.45;
+}
+
+.ascii-band > * {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--band-h) * var(--ascii-skip) * -1);
+  height: calc(var(--band-h) * (1 + var(--ascii-skip)));
+}
+
+.ascii-band::after {
+  background:
+    linear-gradient(180deg,
+      rgba(240, 240, 255, 0) 45%,
+      rgba(240, 240, 255, 0.08) 55%,
+      rgba(240, 240, 255, 0.25) 65%,
+      rgba(240, 240, 255, 0.5) 75%,
+      rgba(240, 240, 255, 0.78) 86%,
+      rgba(240, 240, 255, 0.95) 94%,
+      rgb(240, 240, 255) 100%),
+    linear-gradient(180deg,
+      rgb(10, 31, 72) 0%,
+      rgba(10, 31, 72, 0.7) 6%,
+      rgba(10, 31, 72, 0.35) 13%,
+      rgba(10, 31, 72, 0.12) 21%,
+      rgba(10, 31, 72, 0) 30%);
+}
+
+.sheet .ascii-band > .gradient-ascii-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  top: calc(var(--band-h) * var(--ascii-skip) * -1);
+  height: calc(var(--band-h) * (1 + var(--ascii-skip)));
+}
+
+/* ---------- Card Mobeats (colores de mobeats.io: negro #0a0b0e, azul #1f6bff, dorado #d9a877) ---------- */
+.exp-card {
+  background:
+    radial-gradient(120% 70% at 85% -10%, rgba(31, 107, 255, 0.45) 0%, transparent 60%),
+    radial-gradient(80% 50% at 0% 100%, rgba(217, 168, 119, 0.16) 0%, transparent 60%),
+    #0a0b0e;
+  color: #f2f4f8;
+  justify-content: flex-start;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.exp-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 70%);
+  mask-image: linear-gradient(to bottom, #000, transparent 70%);
+  pointer-events: none;
+}
+
+.exp-card > * {
+  position: relative;
+}
+
+.exp-card .tl-line i,
+.exp-card .tl-line::after {
+  background: #d9a877;
+}
+
+.exp-card .tl-line::before {
+  background: #0a0b0e;
+  border-color: #d9a877;
+}
+
+.exp-card .tl-end small {
+  color: rgba(242, 244, 248, 0.55);
+}
+
+.exp-card .exp-live {
+  background: rgba(31, 107, 255, 0.18);
+  color: #cfe0ff;
+}
+
+.exp-brand {
+  margin-top: auto;
+  display: grid;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+.exp-tagline {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d9a877;
+}
+
+.exp-card .exp-company {
+  margin-top: 0;
+  color: #fff;
+}
+
+.exp-card .exp-role {
+  color: #7fa8ff;
+}
+
+.exp-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.exp-stats li {
+  display: grid;
+  gap: 4px;
+}
+
+.exp-stats b {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  letter-spacing: -0.03em;
+  color: #fff;
+  line-height: 1;
+}
+
+.exp-stats span {
+  font-size: 0.82rem;
+  line-height: 1.3;
+  color: rgba(242, 244, 248, 0.6);
+}
+
+.exp-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.exp-badge {
+  padding: 7px 14px;
+  border: 1px solid rgba(217, 168, 119, 0.5);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #d9a877;
+}
+
+.exp-site {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #1f6bff;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.exp-site:hover {
+  background: #4a86ff;
+  transform: translateY(-2px);
+}
+
+/* Card Mobeats: versión sobria (sin brillos, grilla, insignia ni números grandes). */
+.exp-card {
+  background: #0a0b0e;
+  gap: 14px;
+}
+
+.exp-card::before {
+  display: none;
+}
+
+.exp-card .tl-line i,
+.exp-card .tl-line::after {
+  background: var(--signal);
+}
+
+.exp-card .tl-line::before {
+  background: #0a0b0e;
+  border-color: var(--signal);
+}
+
+.exp-card .exp-live {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.exp-card .exp-role {
+  color: rgba(242, 244, 248, 0.65);
+}
+
+.exp-facts {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: rgba(242, 244, 248, 0.55);
+}
+
+.exp-site {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 7px 14px;
+  white-space: nowrap;
+}
+
+.exp-site:hover {
+  background: #fff;
+  color: #0a0b0e;
+  transform: none;
+}
+
+/* Card Mobeats: azul blueprint como el resto, con la grilla de puntitos. */
+.exp-card {
+  background: var(--blueprint);
+}
+
+.exp-card::before {
+  display: block;
+}
+
+.exp-card .tl-line::before {
+  background: var(--blueprint);
+}
+
+/* Card Mobeats: mismo estilo que las tarjetas de proyectos (base oscura + resplandores), sin puntitos. */
+.exp-card {
+  background:
+    radial-gradient(ellipse at 28% 22%, #3f74d6 0%, transparent 58%),
+    radial-gradient(ellipse at 85% 95%, #1d4a9c 0%, transparent 60%),
+    #0a1a3a;
+}
+
+.exp-card::before {
+  display: none;
+}
+
+.exp-card .tl-line::before {
+  background: #0a1a3a;
+}
+
+/* La estela se apaga sobre tarjetas y componentes. */
+.ghost-layer {
+  transition: opacity 0.25s ease;
+}
+
+.ghost-layer.is-suppressed {
+  opacity: 0;
 }

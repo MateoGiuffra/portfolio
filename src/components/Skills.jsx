@@ -19,21 +19,26 @@ const splitSkills = (str) => {
   return out
 }
 
-// Tarjetas por categoría con chips; cada chip se invierte al pasar el mouse.
+// Filas a todo el ancho: al pasar el mouse la fila se llena de azul desde abajo y los chips saltan en cascada.
 const Skills = ({ t }) => (
   <Section id="skills" title={t.skills.title} wide>
-    <ul className="skill-cards">
-      {t.skills.groups.map(([name, items], i) => (
-        <li className="skill-card" key={name}>
-          <div className="skill-head">
-            <h3>{name}</h3>
-            <span className="skill-count" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          </div>
-          <ul className="chips">
-            {splitSkills(items).map((s) => <li key={s}>{s}</li>)}
-          </ul>
-        </li>
-      ))}
+    <ul className="skill-rows">
+      {t.skills.groups.map(([name, items], i) => {
+        const list = splitSkills(items)
+        return (
+          <li className="skill-row" key={name} tabIndex={0}>
+            <span className="skill-fill" aria-hidden="true" />
+            <span className="skill-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 className="skill-name">{name}</h3>
+            <ul className="skill-chips">
+              {list.map((s, k) => (
+                <li key={s} style={{ '--k': k }}>{s}</li>
+              ))}
+            </ul>
+            <span className="skill-total" aria-hidden="true">{list.length}</span>
+          </li>
+        )
+      })}
     </ul>
   </Section>
 )

@@ -1,43 +1,116 @@
+import { useEffect, useState } from 'react'
 import RollText from './RollText'
+import { LINKS } from '../i18n/content'
 
-const Header = ({ t, onToggleLang }) => (
-  <header className="site-header">
-    <div className="site-header-inner">
-      <a className="brand" href="#top">Mateo Giuffra</a>
-      <nav aria-label="Principal">
-        <ul className="nav-list">
-          {[
-            ['experience', t.nav.experience],
-            ['projects', t.nav.projects],
-            ['work', t.nav.work],
-            ['skills', t.nav.skills],
-          ].map(([id, label]) => (
+// Transparente y flotando sobre el hero; al salir del hero vuelve al fondo sólido.
+const useOverHero = () => {
+  const [over, setOver] = useState(true)
+  useEffect(() => {
+    const check = () => {
+      const hero = document.getElementById('top')
+      setOver(hero ? window.scrollY < hero.offsetHeight - 90 : false)
+    }
+    check()
+    window.addEventListener('scroll', check, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      window.removeEventListener('scroll', check)
+      window.removeEventListener('resize', check)
+    }
+  }, [])
+  return over
+}
+
+// Menú desplegable estilo lusion.co: todo el listado queda dentro del panel.
+const Header = ({ t, onToggleLang }) => {
+  const over = useOverHero()
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
+  const items = [
+    ['experience', t.nav.experience],
+    ['projects', t.nav.projects],
+    ['work', t.nav.work],
+    ['skills', t.nav.skills],
+    ['contact', t.nav.contact],
+  ]
+
+  return (
+    <header className={`site-header${over && !open ? ' site-header--over' : ''}${open ? ' is-open' : ''}`}>
+      <div className="site-header-inner">
+        <a className="brand" href="#top" onClick={() => setOpen(false)}>Mateo Giuffra</a>
+
+        <a className="pill pill-dark roll-host" href="#contact" onClick={() => setOpen(false)}>
+          <span className="sr-only">{t.nav.talk}</span>
+          <RollText text={t.nav.talk} />
+          <i className="pill-dot" aria-hidden="true" />
+        </a>
+
+        <button
+          type="button"
+          className="pill pill-menu roll-host"
+          aria-expanded={open}
+          aria-controls="site-menu"
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span className="sr-only">{open ? t.nav.close : t.nav.menu}</span>
+          <RollText text={open ? t.nav.close : t.nav.menu} />
+          <span className="menu-dots" aria-hidden="true"><i /><i /></span>
+        </button>
+      </div>
+
+      {open && (
+        <button type="button" className="menu-scrim" aria-label={t.nav.close} onClick={() => setOpen(false)} />
+      )}
+
+      <nav id="site-menu" className="menu-panel" aria-label="Principal" hidden={!open}>
+        <ul className="menu-card menu-links">
+          {items.map(([id, label]) => (
             <li key={id}>
-              <a className="pill roll-host" href={`#${id}`}>
+              <a className="roll-host" href={`#${id}`} onClick={() => setOpen(false)}>
                 <span className="sr-only">{label}</span>
                 <RollText text={label} />
+                <i className="menu-dot" aria-hidden="true" />
               </a>
             </li>
           ))}
-          <li>
-            <a className="pill pill-dark roll-host" href="#contact">
-              <span className="sr-only">{t.nav.contact}</span>
-              <RollText text={t.nav.contact} />
-              <i className="pill-dot" aria-hidden="true" />
-            </a>
-          </li>
         </ul>
+
+        <div className="menu-card menu-talk" style={{ '--k': 5 }}>
+          <p>{t.nav.talk}</p>
+          <a className="menu-mail" href={LINKS.email}>
+            <span>{t.contact.emailLink}</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <button
+            type="button"
+            className="menu-lang"
+            onClick={onToggleLang}
+            aria-label={t.langToggle.label}
+          >
+            {t.langToggle.short}
+          </button>
+        </div>
+
+        <div className="menu-card menu-social" style={{ '--k': 6 }}>
+          <a href={LINKS.github} target="_blank" rel="noreferrer">
+            <span>GitHub</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a href={LINKS.linkedin} target="_blank" rel="noreferrer">
+            <span>LinkedIn</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </nav>
-      <button
-        type="button"
-        className="pill lang-toggle roll-host"
-        onClick={onToggleLang}
-        aria-label={t.langToggle.label}
-      >
-        <RollText text={t.langToggle.short} />
-      </button>
-    </div>
-  </header>
-)
+    </header>
+  )
+}
 
 export default Header

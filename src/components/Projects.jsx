@@ -41,6 +41,45 @@ const Projects = ({ t }) => {
     }
   }, [p.items.length])
 
+  // Columna vertebral: la línea se llena hasta el centro de la pantalla, los nodos ya pasados
+  // se encienden y la tarjeta más cercana al centro queda resaltada (las demás se atenúan, no se ocultan).
+  useEffect(() => {
+    const list = document.querySelector('.featured-list')
+    if (!list) return
+    const cards = [...list.querySelectorAll('.fcard')]
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const mid = window.innerHeight * 0.5
+      const lr = list.getBoundingClientRect()
+      list.style.setProperty('--spine', `${Math.max(0, Math.min(lr.height, mid - lr.top))}px`)
+      let best = null
+      let bestDist = Infinity
+      cards.forEach((c) => {
+        const r = c.getBoundingClientRect()
+        c.classList.toggle('is-passed', r.top + 30 < mid)
+        const d = Math.abs(r.top + Math.min(r.height, 360) / 2 - mid)
+        if (d < bestDist) { bestDist = d; best = c }
+      })
+      const inView = lr.top < mid && lr.bottom > mid
+      list.classList.toggle('has-active', inView)
+      cards.forEach((c) => {
+        c.classList.toggle('is-active', inView && c === best)
+        c.classList.toggle('is-dim', inView && c !== best)
+      })
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      cards.forEach((c) => c.classList.remove('is-passed', 'is-active', 'is-dim'))
+    }
+  }, [p.items.length])
+
   return (
     <section id="projects" className="featured" aria-labelledby="projects-title">
       <div className="featured-inner">
