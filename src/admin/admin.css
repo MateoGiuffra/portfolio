@@ -155,3 +155,8 @@
     display: none;
   }
 }
+
+/* Cursor Figma de la landing: tiene que quedar por encima de modales, drawers, menús y avisos de Mantine. */
+html .figma-cursor {
+  z-index: 100000;
+}

@@ -87,3 +87,21 @@ export const cursorConfig: CursorConfig = {
     },
   },
 }
+
+// Reglas del cursor Figma en el backoffice (mismo cursor que la landing, selectores de Mantine).
+// Se evalúan en orden: gana la primera que coincide.
+export const adminCursorRules: readonly FigmaRule[] = [
+  ['arrow', ':disabled, [data-disabled], [aria-disabled="true"]'],
+  ['hand', '[aria-label="Arrastrar para reordenar"]'],
+  [
+    'point',
+    [
+      'a', 'button', 'label', 'summary', 'select', '[role="button"]', '[role="option"]', '[role="tab"]',
+      '[role="menuitem"]', '[role="switch"]', '[role="checkbox"]', '[data-combobox-option]',
+      'input[type="checkbox"]', 'input[type="radio"]', 'input[type="color"]', 'input[type="month"]',
+      '.mantine-Select-input', '.mantine-ColorSwatch-root', '.mantine-ColorInput-colorPreview',
+      '.mantine-Pill-remove',
+    ].join(', '),
+  ],
+  ['text', 'input, textarea, [contenteditable="true"]'],
+]
