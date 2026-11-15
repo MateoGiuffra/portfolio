@@ -4,6 +4,8 @@ import { CARD_VARIANTS, PALETTE, cardOf } from '@/config/cardPalette'
 import type { Card, CardVariant, ProjectData } from '@/domain/types'
 import { vars } from '@/lib/cssVars'
 
+const isCardVariant = (v: string): v is CardVariant => CARD_VARIANTS.some((c) => c.id === v)
+
 const SWATCHES = [...new Set(PALETTE.flat())]
 const COLORS: readonly (readonly [key: 'bg' | 'fg' | 'accent', label: string])[] = [
   ['bg', 'Fondo'], ['fg', 'Texto'], ['accent', 'Acento'],
@@ -38,8 +40,7 @@ export default function CardEditor({ item, onChange }: CardEditorProps) {
         <Select
           label="Tipo de tarjeta" data={variants} value={variants.some((v) => v.value === card.variant) ? card.variant : 'mark'}
           allowDeselect={false}
-          // Select entrega string; los valores salen de `variants` (CardVariant).
-          onChange={(v) => v && set({ variant: v as CardVariant })}
+          onChange={(v) => v && isCardVariant(v) && set({ variant: v })}
         />
         {COLORS.map(([k, label]) => (
           <ColorInput

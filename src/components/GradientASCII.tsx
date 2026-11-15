@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import type { HTMLAttributes } from 'react';
 import './GradientASCII.css';
 import { VERTEX, FIELD, HALO, BLUR, COMPOSITE } from '@/shaders/gradientAscii';
-import { clamp } from '@/lib/webgl/math';
+import { clamp } from '@/lib/math';
 import { toLab } from '@/lib/webgl/color';
 import { linkProgram, resolveUniforms } from '@/lib/webgl/program';
 import type { LinkedProgram } from '@/lib/webgl/program';

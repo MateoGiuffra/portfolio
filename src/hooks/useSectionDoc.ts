@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import type { SectionDoc } from '@/domain/types'
+import type { SectionDoc, SectionId } from '@/domain/types'
 import { errorMessage } from '@/lib/notify'
 import { getSection, saveSection } from '@/services/contentRepo'
 
-export type ContentId = Parameters<typeof getSection>[0]
-
 interface Result {
-  id: ContentId
+  id: SectionId | 'links'
   data: SectionDoc | null
   error: string
 }
@@ -19,7 +17,7 @@ export interface SectionDocState {
 }
 
 // `content/<id>` para el backoffice.
-export function useSectionDoc(id: ContentId): SectionDocState {
+export function useSectionDoc(id: SectionId | 'links'): SectionDocState {
   const [result, setResult] = useState<Result | null>(null)
 
   useEffect(() => {

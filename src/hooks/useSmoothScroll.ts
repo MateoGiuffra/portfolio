@@ -1,4 +1,6 @@
 import { useEffect, type RefObject } from 'react'
+import { clamp } from '@/lib/math'
+import { prefersReducedMotion } from '@/lib/motion'
 
 export interface SmoothScrollRefs {
   track: RefObject<HTMLDivElement | null>
@@ -46,7 +48,7 @@ const createInertia = (): Inertia => {
       if (e.ctrlKey || e.defaultPrevented) return
       e.preventDefault()
       if (!running) current = window.scrollY
-      target = Math.min(Math.max(target + e.deltaY, 0), maxScroll())
+      target = clamp(target + e.deltaY, 0, maxScroll())
       if (!running) {
         running = true
         raf = requestAnimationFrame(tick)
@@ -97,7 +99,7 @@ const attachDrag = (
   const toScroll = (clientY: number): void => {
     const r = track.getBoundingClientRect()
     const h = bar.offsetHeight
-    const ratio = Math.min(Math.max((clientY - r.top - grab) / (r.height - h), 0), 1)
+    const ratio = clamp((clientY - r.top - grab) / (r.height - h), 0, 1)
     snapTo(ratio * maxScroll())
   }
   const onMoveDrag = (e: PointerEvent): void => {
@@ -144,7 +146,7 @@ export function useSmoothScroll({ track, bar }: SmoothScrollRefs): void {
     const t = track.current
     const b = bar.current
     if (!t || !b) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = prefersReducedMotion()
     const fine = window.matchMedia('(pointer: fine)').matches
 
     const inertia = createInertia()

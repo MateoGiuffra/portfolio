@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import './GhostCursor.css';
 import { VERTEX, SIM, SHADE, DOWN, BLUR, COMPOSITE } from '@/shaders/ghostCursor';
-import { clamp } from '@/lib/webgl/math';
+import { clamp } from '@/lib/math';
 import { parseColor } from '@/lib/webgl/color';
 import { compileShader, linkSharedVertex, inspectProgram } from '@/lib/webgl/program';
 import type { SharedVertexProgram } from '@/lib/webgl/program';

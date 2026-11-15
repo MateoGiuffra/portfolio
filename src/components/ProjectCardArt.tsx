@@ -1,5 +1,6 @@
 import { cardOf } from '@/config/cardPalette'
 import type { Project } from '@/domain/types'
+import { pad2 } from '@/lib/format'
 
 interface ProjectCardArtProps {
   item: Project
@@ -26,7 +27,7 @@ const initials = (title: string): string =>
 // Contenido de la tarjeta según la variante elegida en el backoffice.
 export default function ProjectCardArt({ item, idx }: ProjectCardArtProps) {
   const { variant } = cardOf(item, idx)
-  const num = <span className="fcard-num" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
+  const num = <span className="fcard-num" aria-hidden="true">{pad2(idx + 1)}</span>
 
   if (variant === 'photo' && item.photos?.length) {
     return (

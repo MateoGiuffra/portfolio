@@ -1,5 +1,6 @@
 import Section from './Section'
 import { vars } from '@/lib/cssVars'
+import { pad2 } from '@/lib/format'
 import type { LangContent } from '@/domain/types'
 
 interface SkillsProps {
@@ -34,7 +35,7 @@ const Skills = ({ t }: SkillsProps) => (
         return (
           <li className="skill-row" key={name} tabIndex={0}>
             <span className="skill-fill" aria-hidden="true" />
-            <span className="skill-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span className="skill-n" aria-hidden="true">{pad2(i + 1)}</span>
             <h3 className="skill-name">{name}</h3>
             <ul className="skill-chips">
               {list.map((s, k) => (

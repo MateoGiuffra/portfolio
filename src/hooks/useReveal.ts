@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
+import { prefersReducedMotion } from '@/lib/motion'
 import { SEL } from '@/lib/selectors'
 
 // Revela [data-reveal] al entrar en pantalla. Progressive enhancement: los elementos son
 // visibles por defecto y solo se ocultan (is-pending) si empiezan fuera de la vista.
 export function useReveal(dep: unknown): void {
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (prefersReducedMotion()) return
     if (!('IntersectionObserver' in window)) return
     const vh = window.innerHeight
     const els = [...document.querySelectorAll<HTMLElement>(SEL.reveal)].filter(

@@ -9,6 +9,7 @@ interface LoginState {
 
 // Origen guardado al mandar al login; solo se acepta una ruta del BO que no sea el login.
 function originOf(state: unknown): string {
+  // `state` es unknown (location.state); se estrecha a LoginState y `from` se revalida con typeof abajo.
   const from = (state as LoginState | null)?.from
   return typeof from === 'string' && from.startsWith(`${ADMIN_ROOT}/`) && from !== ADMIN_LOGIN ? from : ''
 }

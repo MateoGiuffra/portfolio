@@ -1,4 +1,4 @@
-import { clamp } from './math'
+import { clamp } from '@/lib/math'
 
 // Color CSS (#hex o rgb()) -> canales RGB 0..1. Respaldo: violeta del cursor.
 export const parseColor = (value: string | undefined): number[] => {

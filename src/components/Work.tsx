@@ -1,6 +1,7 @@
 import Section from './Section'
 import RollText from './RollText'
 import { vars } from '@/lib/cssVars'
+import { pad2 } from '@/lib/format'
 import type { LangContent } from '@/domain/types'
 
 interface WorkProps {
@@ -19,7 +20,7 @@ const Work = ({ t }: WorkProps) => (
           key={item.title}
           style={vars({ '--i': i })}
         >
-          <span className="work-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <span className="work-num" aria-hidden="true">{pad2(i + 1)}</span>
           <div>
             <h3 className="work-card-title">
               <span className="sr-only">{item.title}</span>

@@ -1,5 +1,6 @@
 import Section from './Section'
 import { vars } from '@/lib/cssVars'
+import { pad2 } from '@/lib/format'
 import type { ExperienceSection, Job, LangContent } from '@/domain/types'
 
 interface ExperienceProps {
@@ -61,7 +62,7 @@ const Experience = ({ t }: ExperienceProps) => {
             <ol className="exp-list">
               {(j.bullets || []).map((b, i) => (
                 <li key={b}>
-                  <span className="exp-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="exp-n" aria-hidden="true">{pad2(i + 1)}</span>
                   <p>{b}</p>
                 </li>
               ))}

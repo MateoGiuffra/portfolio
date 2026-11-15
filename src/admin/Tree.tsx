@@ -6,7 +6,7 @@ import {
   ActionIcon, Button, Group, NumberInput, Paper, Stack, Switch, TagsInput, Text, TextInput, Textarea,
 } from '@mantine/core'
 import { Plus, X } from 'lucide-react'
-import { ICON } from '@/lib/icons'
+import { ICON, ICON_SM } from '@/lib/icons'
 import type { Lang } from '@/domain/types'
 import type { Dict, LocalizedValue } from './shape'
 import { LINES, PROTOS, blankDict, blankLike, isDict, isEmpty, isList, isLocalized, labelOf } from './shape'
@@ -90,7 +90,7 @@ function ListField({ name, label, description, error, value, reference, onChange
         )
       })}
       <Button
-        variant="default" size="xs" style={{ alignSelf: 'flex-start' }} leftSection={<Plus size={14} strokeWidth={1.5} aria-hidden />}
+        variant="default" size="xs" style={{ alignSelf: 'flex-start' }} leftSection={<Plus {...ICON_SM} />}
         onClick={() => onChange([...items, structuredClone(proto)])}
       >
         Agregar

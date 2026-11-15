@@ -1,6 +1,7 @@
 // Esquema de contenido persistido en Firestore + conversión desde/hacia content.ts.
 // Módulo puro (sin React ni Firebase): lo comparten el script de migración, la web y el backoffice.
 import { defaultCard } from '../config/cardPalette'
+import { pad2 } from '../lib/format'
 import type {
   ContentData,
   CvFiles,
@@ -17,7 +18,7 @@ import type {
   Seed,
 } from './types'
 
-export const LANGS: readonly Lang[] = ['es', 'en']
+const LANGS: readonly Lang[] = ['es', 'en']
 
 // Secciones: un documento `content/<id>` con cada clave como {es, en}.
 export const SECTION_SPECS: Record<SectionId, SectionSpec> = {
@@ -55,7 +56,7 @@ export const LIST_SPECS: Record<ListName, ListSpec> = {
   },
 }
 
-export const LIST_NAMES: readonly ListName[] = ['workItems', 'jobs', 'education', 'skillGroups', 'projects']
+const LIST_NAMES: readonly ListName[] = ['workItems', 'jobs', 'education', 'skillGroups', 'projects']
 export const COLLECTIONS: readonly ('content' | ListName)[] = ['content', ...LIST_NAMES]
 
 // ---------- utilidades ----------
@@ -71,7 +72,6 @@ const dict = (o: object): Dict => ({ ...o })
 const clone = <T>(v: T): T => (v === undefined ? v : JSON.parse(JSON.stringify(v)))
 const slug = (s: unknown): string =>
   String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-const pad = (n: number): string => String(n).padStart(2, '0')
 
 // Firestore no admite arrays anidados: [[a,b]] se guarda como [{a,b}].
 const pairsEncode = (rows: readonly (readonly unknown[])[], keys: readonly string[]): Dict[] =>
@@ -119,7 +119,7 @@ const listSources = (c: LangContent): Record<ListName, Dict[]> => ({
 
 const itemId = (name: ListName, i: number, es: Dict): string => {
   const label = name === 'workItems' ? '' : es.title || es.company || es.name
-  return label ? slug(label) : `item-${pad(i + 1)}`
+  return label ? slug(label) : `item-${pad2(i + 1)}`
 }
 
 export function buildSeed(content: Localized<LangContent>, links: Links, cv: CvFiles): Seed {
@@ -147,6 +147,7 @@ export function buildSeed(content: Localized<LangContent>, links: Links, cv: CvF
     })
   }
   // El armado es dinámico (guiado por SECTION_SPECS/LIST_SPECS); la forma resultante es la de `Seed`.
+  // Doble cast inevitable: `docs` se arma dinámicamente (por SECTION_SPECS/LIST_SPECS) como diccionario.
   return docs as unknown as Seed
 }
 
@@ -183,6 +184,7 @@ export function assemble(raw: RawContent, base: ContentData): ContentData
 export function assemble(raw: RawContent, base?: null): PartialContentData
 export function assemble(raw: RawContent, base?: ContentData | null): ContentData | PartialContentData {
   // `clone` conserva la forma; se trabaja como diccionario porque el armado es dinámico.
+  // Seguro: `Work` es un diccionario laxo de la misma forma que `base`; se afina al devolver (ver el return).
   const out = (base ? clone(base) : { es: {}, en: {}, links: {}, cv: {} }) as unknown as Work
 
   for (const lang of LANGS) {
@@ -238,6 +240,7 @@ export function assemble(raw: RawContent, base?: ContentData | null): ContentDat
     out.cv = cv
   }
   // Forma final: `ContentData` con respaldo, `PartialContentData` sin él (ver sobrecargas).
+  // Seguro: las sobrecargas de `assemble` fijan cuál de los dos tipos corresponde según `base`.
   return out as unknown as ContentData | PartialContentData
 }
 
@@ -250,6 +253,7 @@ export function isSubset(esperado: unknown, actual: unknown, path = '', diffs: s
     if (!actual || typeof actual !== 'object') diffs.push(`${path}: falta objeto`)
     else {
       const act = actual as Dict // objeto no nulo (verificado arriba)
+      // Seguro: `esperado` es objeto no nulo (rama del else if); Object.keys no devuelve claves ajenas.
       for (const k of Object.keys(esperado)) isSubset((esperado as Dict)[k], act[k], `${path}.${k}`, diffs)
     }
   } else if (esperado !== actual) diffs.push(`${path}: "${String(esperado)}" != "${String(actual)}"`)

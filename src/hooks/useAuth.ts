@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { signInWithGoogle, signOutUser, subscribeAuth } from '@/services/authService'
 import type { AdminUser } from '@/services/authService'
+import { errorMessage } from '@/lib/notify'
 
 export interface UseAuth {
   /** undefined = todavía resolviendo la sesión; null = sin sesión. */
@@ -28,7 +29,7 @@ export function useAuth(): UseAuth {
     try {
       await signInWithGoogle()
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(errorMessage(e))
     }
   }, [])
 

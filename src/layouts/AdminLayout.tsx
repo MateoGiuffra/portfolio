@@ -6,7 +6,7 @@ import { useAdminAuth } from '@/hooks/useAdminAuth'
 import { useUnsaved } from '@/hooks/useUnsaved'
 import { adminPath } from '@/lib/adminPaths'
 import { hrefFor, siteHref } from '@/lib/basePath'
-import { ICON } from '@/lib/icons'
+import { ICON, ICON_SM } from '@/lib/icons'
 import { ADMIN_TABS } from './adminTabs'
 
 export default function AdminLayout() {
@@ -33,7 +33,7 @@ export default function AdminLayout() {
               <Menu.Target>
                 <Button
                   variant="subtle" color="gray" size="compact-md" aria-label="Cuenta"
-                  leftSection={<UserRound {...ICON} />} rightSection={<ChevronDown size={14} strokeWidth={1.5} aria-hidden />}
+                  leftSection={<UserRound {...ICON} />} rightSection={<ChevronDown {...ICON_SM} />}
                 >
                   <span className="bo-account-name">{name}</span>
                 </Button>

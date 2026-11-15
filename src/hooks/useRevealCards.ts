@@ -1,4 +1,5 @@
 import { useEffect, type RefObject } from 'react'
+import { prefersReducedMotion } from '@/lib/motion'
 import { SEL } from '@/lib/selectors'
 
 // Reveal al entrar en viewport. Las tarjetas son visibles por defecto: solo se ocultan
@@ -8,7 +9,7 @@ export function useRevealCards(listRef: RefObject<HTMLElement | null>, dep: unkn
     const list = listRef.current
     if (!list) return
     const cards = [...list.querySelectorAll<HTMLElement>(SEL.featuredCard)]
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = prefersReducedMotion()
     if (reduce || !('IntersectionObserver' in window)) return
     const vh = window.innerHeight
     const pending = cards.filter((c) => c.getBoundingClientRect().top > vh * 0.9)

@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router'
 import { SECTION_SPECS } from '@/domain/schema'
 import type { Lang, SectionDoc, SectionId } from '@/domain/types'
 import { useSectionDoc } from '@/hooks/useSectionDoc'
-import type { ContentId } from '@/hooks/useSectionDoc'
 import { useReportDirty, useUnsaved } from '@/hooks/useUnsaved'
 import { adminPath } from '@/lib/adminPaths'
 import { ICON } from '@/lib/icons'
@@ -18,7 +17,7 @@ import type { Dict, Rule } from './shape'
 import { copyAllFromEs, isLocalized, labelOf, missingCount, urlRule } from './shape'
 
 interface SectionRef {
-  id: ContentId
+  id: SectionId | 'links'
   label: string
 }
 
@@ -31,7 +30,7 @@ const SECTIONS: readonly SectionRef[] = [
 const URL_KEYS = ['github', 'linkedin', 'email']
 
 interface SectionFormProps {
-  id: ContentId
+  id: SectionId | 'links'
   label: string
   data: SectionDoc
   onSave: (values: SectionDoc) => Promise<void>
