@@ -16,6 +16,3 @@ const firebaseConfig = {
 
 export const app: FirebaseApp = initializeApp(firebaseConfig)
 export const db: Firestore = getFirestore(app)
-
-// Compatibilidad temporal: el backoffice todavía lo importa desde acá.
-export { ADMIN_EMAILS } from '@/config/admins'

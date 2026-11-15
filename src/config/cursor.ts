@@ -56,7 +56,7 @@ export interface CursorConfig {
 
 const mode: CursorMode = 'figma'
 
-export const cursorConfig = {
+export const cursorConfig: CursorConfig = {
   mode,
 
   figma: {
@@ -86,4 +86,4 @@ export const cursorConfig = {
       move: 'Mover',
     },
   },
-} satisfies CursorConfig
+}

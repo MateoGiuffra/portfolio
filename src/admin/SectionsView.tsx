@@ -1,45 +1,65 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Group, Loader, Paper, SimpleGrid, Stack, Text, TextInput, Title, UnstyledButton } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { ArrowLeft, ChevronRight } from 'lucide-react'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../services/firebase'
-import { saveDoc } from '../services/firestoreApi'
-import { SECTION_SPECS } from '../services/schema'
+import { Link, useNavigate } from 'react-router'
+import { SECTION_SPECS } from '@/domain/schema'
+import type { Lang, SectionDoc, SectionId } from '@/domain/types'
+import { useSectionDoc } from '@/hooks/useSectionDoc'
+import type { ContentId } from '@/hooks/useSectionDoc'
+import { useReportDirty, useUnsaved } from '@/hooks/useUnsaved'
+import { adminPath } from '@/lib/adminPaths'
+import { ICON } from '@/lib/icons'
+import { notifyError, notifyOk } from '@/lib/notify'
 import LangSwitch from './LangSwitch'
-import { hrefFor, navigate } from './router'
-import { useReportDirty, useUnsaved } from './Unsaved'
 import { Localized, Tree } from './Tree'
+import type { Dict, Rule } from './shape'
 import { copyAllFromEs, isLocalized, labelOf, missingCount, urlRule } from './shape'
 
-const ICON = { size: 16, strokeWidth: 1.5, 'aria-hidden': true }
+interface SectionRef {
+  id: ContentId
+  label: string
+}
 
-const SECTIONS = [...Object.entries(SECTION_SPECS).map(([id, s]) => [id, s.label]), ['links', 'Links y CV']]
+const SECTIONS: readonly SectionRef[] = [
+  // Object.keys pierde el tipo de las claves; son exactamente los SectionId de SECTION_SPECS.
+  ...(Object.keys(SECTION_SPECS) as SectionId[]).map((id) => ({ id, label: SECTION_SPECS[id].label })),
+  { id: 'links', label: 'Links y CV' },
+]
 // Claves de `links` que tienen que ser URL (el CV es una ruta de archivo, no una URL).
 const URL_KEYS = ['github', 'linkedin', 'email']
 
-function SectionForm({ id, label, data }) {
-  const [lang, setLang] = useState('es')
-  const validate = {}
+interface SectionFormProps {
+  id: ContentId
+  label: string
+  data: SectionDoc
+  onSave: (values: SectionDoc) => Promise<void>
+}
+
+function SectionForm({ id, label, data, onSave }: SectionFormProps) {
+  const [lang, setLang] = useState<Lang>('es')
+  const navigate = useNavigate()
+  const validate: Record<string, Rule> = {}
   for (const k of Object.keys(data)) if (id === 'links' && URL_KEYS.includes(k)) validate[k] = urlRule
-  const form = useForm({ mode: 'controlled', initialValues: data, validate })
+  const form = useForm<Dict>({ mode: 'controlled', initialValues: data, validate })
   const dirty = form.isDirty()
   useReportDirty(dirty)
   const { guard } = useUnsaved()
   const keys = Object.keys(form.values)
-  const loc = Object.fromEntries(keys.filter((k) => isLocalized(form.values[k])).map((k) => [k, form.values[k]]))
+  const loc: Dict = Object.fromEntries(keys.filter((k) => isLocalized(form.values[k])).map((k) => [k, form.values[k]]))
   const missing = { es: missingCount(loc, 'es'), en: missingCount(loc, 'en') }
 
-  const back = () => guard(() => navigate('/textos'))
+  const back = () => guard(() => navigate(adminPath('textos')))
   const submit = form.onSubmit(
     async (values) => {
       try {
-        await saveDoc('content', id, values)
+        // Los valores parten de un documento de Firestore y se editan sin cambiar su forma.
+        await onSave(values as SectionDoc)
         form.resetDirty()
-        notifications.show({ color: 'positive', message: `Guardado: ${label}` })
+        notifyOk(`Guardado: ${label}`)
       } catch (e) {
-        notifications.show({ color: 'negative', title: 'No se pudo guardar', message: e.message })
+        notifyError('No se pudo guardar', e)
       }
     },
     () => notifications.show({ color: 'amber', title: 'Revisá el formulario', message: 'Hay campos con errores' }),
@@ -78,35 +98,26 @@ function SectionForm({ id, label, data }) {
   )
 }
 
-function SectionLoader({ id, label }) {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState('')
-  useEffect(() => {
-    getDoc(doc(db, 'content', id))
-      .then((s) => {
-        // `_updatedAt` lo agrega saveDoc; no se edita.
-        const raw = s.exists() ? s.data() : {}
-        setData(Object.fromEntries(Object.entries(raw).filter(([k]) => !k.startsWith('_'))))
-      })
-      .catch((e) => setError(e.message))
-  }, [id])
+function SectionLoader({ id, label }: SectionRef) {
+  const { data, error, save } = useSectionDoc(id)
   if (error) return <Text c="negative">{error}</Text>
   if (!data) return <Loader size="sm" />
-  return <SectionForm id={id} label={label} data={data} />
+  return <SectionForm id={id} label={label} data={data} onSave={save} />
 }
 
-export default function SectionsPage({ sectionId }) {
-  const current = SECTIONS.find(([id]) => id === sectionId)
-  if (current) return <SectionLoader key={sectionId} id={current[0]} label={current[1]} />
+interface SectionsViewProps {
+  sectionId?: string
+}
+
+export default function SectionsView({ sectionId }: SectionsViewProps) {
+  const current = SECTIONS.find((s) => s.id === sectionId)
+  if (current) return <SectionLoader key={current.id} id={current.id} label={current.label} />
   return (
     <Stack>
       <Title order={3}>Textos de la web</Title>
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="xs">
-        {SECTIONS.map(([id, label]) => (
-          <UnstyledButton
-            key={id} component="a" href={hrefFor(`/textos/${id}`)} className="bo-link-row"
-            onClick={(e) => { e.preventDefault(); navigate(`/textos/${id}`) }}
-          >
+        {SECTIONS.map(({ id, label }) => (
+          <UnstyledButton key={id} component={Link} to={adminPath('textos', id)} className="bo-link-row">
             <Paper withBorder p="sm">
               <Group justify="space-between">
                 <Text fw={500}>{label}</Text>
