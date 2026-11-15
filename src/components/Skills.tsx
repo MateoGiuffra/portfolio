@@ -1,0 +1,53 @@
+import Section from './Section'
+import { vars } from '@/lib/cssVars'
+import { pad2 } from '@/lib/format'
+import type { LangContent } from '@/domain/types'
+
+interface SkillsProps {
+  t: LangContent
+}
+
+// Parte "A, B (c, d), E" en ["A", "B (c, d)", "E"] sin cortar dentro de paréntesis.
+const splitSkills = (str: string): string[] => {
+  const out: string[] = []
+  let depth = 0
+  let cur = ''
+  for (const ch of str) {
+    if (ch === '(') depth++
+    if (ch === ')') depth--
+    if (ch === ',' && depth === 0) {
+      out.push(cur.trim())
+      cur = ''
+    } else {
+      cur += ch
+    }
+  }
+  if (cur.trim()) out.push(cur.trim())
+  return out
+}
+
+// Filas a todo el ancho: al pasar el mouse la fila se llena de azul desde abajo y los chips saltan en cascada.
+const Skills = ({ t }: SkillsProps) => (
+  <Section id="skills" title={t.skills.title} wide>
+    <ul className="skill-rows">
+      {t.skills.groups.map(([name, items], i) => {
+        const list = splitSkills(items)
+        return (
+          <li className="skill-row" key={name} tabIndex={0}>
+            <span className="skill-fill" aria-hidden="true" />
+            <span className="skill-n" aria-hidden="true">{pad2(i + 1)}</span>
+            <h3 className="skill-name">{name}</h3>
+            <ul className="skill-chips">
+              {list.map((s, k) => (
+                <li key={s} style={vars({ '--k': k })}>{s}</li>
+              ))}
+            </ul>
+            <span className="skill-total" aria-hidden="true">{list.length}</span>
+          </li>
+        )
+      })}
+    </ul>
+  </Section>
+)
+
+export default Skills
