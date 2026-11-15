@@ -25,8 +25,7 @@ const initials = (title: string): string =>
 
 // Contenido de la tarjeta según la variante elegida en el backoffice.
 export default function ProjectCardArt({ item, idx }: ProjectCardArtProps) {
-  // `string` (no CardVariant): 'photo' es una variante legada que el contenido aún puede traer.
-  const { variant }: { variant: string } = cardOf(item, idx)
+  const { variant } = cardOf(item, idx)
   const num = <span className="fcard-num" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
 
   if (variant === 'photo' && item.photos?.length) {

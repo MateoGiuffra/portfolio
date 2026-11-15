@@ -38,7 +38,7 @@ export default function CardEditor({ item, onChange }: CardEditorProps) {
         <Select
           label="Tipo de tarjeta" data={variants} value={variants.some((v) => v.value === card.variant) ? card.variant : 'mark'}
           allowDeselect={false}
-          // 'photo' es una variante legada: no está en CardVariant pero el render la soporta.
+          // Select entrega string; los valores salen de `variants` (CardVariant).
           onChange={(v) => v && set({ variant: v as CardVariant })}
         />
         {COLORS.map(([k, label]) => (

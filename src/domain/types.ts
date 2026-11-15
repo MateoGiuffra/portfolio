@@ -7,7 +7,7 @@ export type Localized<T> = { es: T; en: T }
 export type Json = string | number | boolean | null | Json[] | { [key: string]: Json }
 
 // ---------- Tarjeta de proyecto ----------
-export type CardVariant = 'mark' | 'gradient' | 'pattern' | 'stack' | 'monogram' | 'solid'
+export type CardVariant = 'mark' | 'gradient' | 'pattern' | 'stack' | 'monogram' | 'solid' | 'photo'
 export interface Card {
   variant: CardVariant
   bg: string
