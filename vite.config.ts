@@ -1,10 +1,9 @@
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
-// Allow switching base path via env var VITE_RELATIVE
-// If VITE_RELATIVE === 'true' we use a relative base ('./') so built assets
-// are referenced relatively (useful for testing ./dist locally). Otherwise,
-// fall back to the GitHub Pages base used previously (/portfolio).
+// VITE_RELATIVE=true -> base relativa ('./') para probar ./dist en local.
+// Si no, la base de GitHub Pages (/portfolio/).
 const useRelative = process.env.VITE_RELATIVE === 'true'
 const basePath = useRelative ? './' : '/portfolio/'
 
@@ -13,4 +12,5 @@ export default defineConfig({
   plugins: [react()],
   base: basePath,
   publicDir: 'public',
+  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
 })

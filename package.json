@@ -14,9 +14,11 @@
     "preview": "vite preview",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
-    "seed": "node scripts/seed.mjs",
-    "verify:parity": "node scripts/verify-parity.mjs",
-    "check:offline": "node scripts/offline-check.mjs"
+    "seed": "tsx scripts/seed.mjs",
+    "verify:parity": "tsx scripts/verify-parity.mjs",
+    "check:offline": "tsx scripts/offline-check.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -31,10 +33,12 @@
     "lucide-react": "^1.73.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-hot-toast": "^2.6.1"
+    "react-hot-toast": "^2.6.1",
+    "react-router": "^8.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react-swc": "^3.11.0",
@@ -45,7 +49,11 @@
     "firebase-admin": "^14.5.1",
     "gh-pages": "^6.3.0",
     "globals": "^16.5.0",
-    "vite": "^6.4.6"
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.2",
+    "vite": "^6.4.6",
+    "vitest": "^5.1.0"
   },
   "pnpm": {
     "overrides": {
