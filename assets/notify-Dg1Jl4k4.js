@@ -1,0 +1,1 @@
+import{a as s}from"./notifications.store-CDTeEINt.js";const t=o=>o instanceof Error?o.message:String(o),n=(o,r)=>{s.show({color:"negative",title:o,message:t(r)})},e=o=>{s.show({color:"positive",message:o})};export{n as a,t as e,e as n};
