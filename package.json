@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@10.24.0",
   "homepage": "https://mateogiuffra.github.io/portfolio/",
   "name": "portfolio",
   "private": true,
@@ -11,7 +12,7 @@
     "build:gh": "cross-env VITE_RELATIVE=false vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
     "seed": "node scripts/seed.mjs",
     "verify:parity": "node scripts/verify-parity.mjs",

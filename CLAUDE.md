@@ -15,8 +15,8 @@ Contenido y backoffice en **Firebase (plan Spark, proyecto `counter-a05c4`)**: A
 - NUNCA hacer commit/push sin que el usuario lo pida (el push publica el sitio).
 - La clave de service account vive en `~/.config/firebase/counter-a05c4-admin.json`. No leerla, no copiarla al repo, no pegarla en el frontend.
 - Admins (login Google): `matteogiuffrah40@gmail.com`, `mgiuffra@mobeats.io`. Deben coincidir en `firestore.rules` y `src/services/firebase.js`.
-- Cambios de contenido/esquema → correr `npm run check:offline` y `npm run verify:parity`; verificación visual con la skill `bo-parity`.
-- `npm run seed` NO pisa documentos existentes (protege lo editado en el BO); `--force` sí pisa.
+- Cambios de contenido/esquema → correr `pnpm run check:offline` y `pnpm run verify:parity`; verificación visual con la skill `bo-parity`.
+- `pnpm run seed` NO pisa documentos existentes (protege lo editado en el BO); `--force` sí pisa.
 - Usuario: español rioplatense, mínimo trabajo para él, HDD lento (no escribir de más), pantalla 1366x768.
 
 ## Orquestación

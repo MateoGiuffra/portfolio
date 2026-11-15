@@ -12,9 +12,9 @@ Sitio personal en React + Vite, bilingüe (ES/EN). Publicado en https://mateogiu
 ## Desarrollo
 
 ```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run lint
+pnpm install
+pnpm run dev      # http://localhost:5173
+pnpm run lint
 ```
 
 ## Formulario de contacto (opcional)
@@ -34,5 +34,5 @@ Sin ellas, la sección de contacto muestra solo los enlaces (email, LinkedIn, Gi
 GitHub Pages sirve la rama `gh-pages`. Desde la raíz del repo, con el `.env` presente si se quiere el formulario:
 
 ```bash
-npm run deploy   # compila con base /portfolio/ y publica dist en gh-pages
+pnpm run deploy   # compila con base /portfolio/ y publica dist en gh-pages
 ```

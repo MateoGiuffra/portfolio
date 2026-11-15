@@ -1,7 +1,7 @@
 name: Deploy a GitHub Pages
 
 # Cada push a main compila el sitio y lo publica en la rama gh-pages
-# (la misma que antes se publicaba a mano con `npm run deploy`).
+# (la misma que antes se publicaba a mano con `pnpm run deploy`).
 on:
   push:
     branches: [main]
@@ -21,19 +21,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # La versión de pnpm sale del campo packageManager de package.json.
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       # gh-pages clona el repo por su cuenta y no hereda las credenciales del checkout,
       # por eso el token va en la URL del remoto (GitHub lo enmascara en los logs).
       - name: Publicar dist/ en gh-pages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx gh-pages -d dist -u "github-actions <github-actions@users.noreply.github.com>" -r "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+        run: pnpm exec gh-pages -d dist -u "github-actions <github-actions@users.noreply.github.com>" -r "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
