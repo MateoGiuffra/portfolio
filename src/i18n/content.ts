@@ -1,16 +1,18 @@
+import type { CvFiles, LangContent, Links, Localized } from '../domain/types'
+
 // Contenido bilingüe del portfolio. Toda la copy vive acá.
-export const LINKS = {
+export const LINKS: Links = {
   github: 'https://github.com/MateoGiuffra',
   linkedin: 'https://www.linkedin.com/in/mateo-giuffra-023682289/',
   email: 'mailto:matteogiuffrah40@gmail.com',
 }
 
-export const CV_FILES = {
+export const CV_FILES: CvFiles = {
   es: 'files/CV-Mateo-Giuffra-ES.docx',
   en: 'files/CV-Mateo-Giuffra-EN.docx',
 }
 
-export const content = {
+export const content: Localized<LangContent> = {
   es: {
     htmlLang: 'es',
     skip: 'Ir al contenido',

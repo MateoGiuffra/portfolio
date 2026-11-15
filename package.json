@@ -14,9 +14,9 @@
     "preview": "vite preview",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
-    "seed": "tsx scripts/seed.mjs",
-    "verify:parity": "tsx scripts/verify-parity.mjs",
-    "check:offline": "tsx scripts/offline-check.mjs",
+    "seed": "tsx scripts/seed.ts",
+    "verify:parity": "tsx scripts/verify-parity.ts",
+    "check:offline": "tsx scripts/offline-check.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

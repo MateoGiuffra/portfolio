@@ -1,6 +1,10 @@
+import type { Card, CardVariant } from '../domain/types'
+
+type PaletteEntry = readonly [bg: string, fg: string, accent: string]
+
 // Paleta por defecto de las tarjetas de proyecto: [fondo, texto, acento del degradé].
 // Se rota por posición cuando el proyecto no define su propia tarjeta.
-export const PALETTE = [
+export const PALETTE: readonly PaletteEntry[] = [
   ['#1a1411', '#ffedd7', '#c4793a'],
   ['#181818', '#fffde0', '#6b8fb5'],
   ['#121414', '#ffffff', '#2f6f8f'],
@@ -11,7 +15,7 @@ export const PALETTE = [
 ]
 
 // Variantes de tarjeta para proyectos sin foto (la foto se usa cuando hay `photos`).
-export const CARD_VARIANTS = [
+export const CARD_VARIANTS: readonly { id: CardVariant; label: string }[] = [
   { id: 'mark', label: 'Marca (título grande)' },
   { id: 'gradient', label: 'Degradé' },
   { id: 'pattern', label: 'Patrón ASCII' },
@@ -20,10 +24,13 @@ export const CARD_VARIANTS = [
   { id: 'solid', label: 'Color liso' },
 ]
 
-export const defaultCard = (index = 0) => {
+export const defaultCard = (index = 0): Card => {
   const [bg, fg, accent] = PALETTE[index % PALETTE.length]
   return { variant: 'mark', bg, fg, accent }
 }
 
 // Tarjeta efectiva de un proyecto: lo guardado en la base, completado con la paleta por defecto.
-export const cardOf = (item, idx) => ({ ...defaultCard(idx), ...(item.card || {}) })
+export const cardOf = (item: { card?: Partial<Card> | null }, idx: number): Card => ({
+  ...defaultCard(idx),
+  ...(item.card || {}),
+})
