@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 import {
@@ -124,6 +124,8 @@ function Shell({ user }) {
 export default function Admin() {
   const [user, setUser] = useState(undefined)
   const [error, setError] = useState('')
+  const [page, ...rest] = useAdminPath()
+  const returnTo = useRef('')
 
   useEffect(() => onAuthStateChanged(auth, (u) => {
     if (u && !ADMIN_EMAILS.includes(u.email)) {
@@ -134,6 +136,18 @@ export default function Admin() {
       setUser(u)
     }
   }), [])
+
+  // El login tiene su propia URL (/bo/login). Sin sesión se va ahí; con sesión, de vuelta a donde se estaba.
+  useEffect(() => {
+    if (user === undefined) return
+    if (!user && page !== 'login') {
+      returnTo.current = page ? `/${[page, ...rest].join('/')}` : ''
+      navigate('/login', { replace: true })
+    } else if (user && page === 'login') {
+      navigate(returnTo.current || `/${DEFAULT_PAGE}`, { replace: true })
+      returnTo.current = ''
+    }
+  }, [user, page, rest.join('/')]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const login = async () => {
     setError('')
