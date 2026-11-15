@@ -23,7 +23,7 @@ archivos que se le asignaron. No decide el alcance, no toca archivos ajenos.
 
 ## Arquitectura (dependencias solo hacia abajo)
 ```
-pages/ → features/ → hooks/ → services/ → domain/
+pages/ → features(=components/ en la web pública, admin/ en el BO) → hooks/ → services/ → domain/
 ```
 - `domain/`: tipos + `schema` puro (sin React ni SDK). Lo usan web, BO y scripts.
 - `services/`: ÚNICO lugar con `firebase/*`, `emailjs`, `localStorage`. Devuelven tipos de `domain/`.
@@ -37,7 +37,7 @@ pages/ → features/ → hooks/ → services/ → domain/
 - Entidades en `domain/types.ts`: `Localized<T> = { es: T; en: T }`, `Project`, `Job`, `Education`, `SkillGroup`, `WorkItem`, `ContentDoc`. Nada de tuplas posicionales en el modelo.
 - Firestore: sin arrays anidados (ver encode/decode en `schema`). Un converter tipado por colección (`FirestoreDataConverter<T>`).
 - Imports con `import type` para tipos. Rutas con alias `@/` → `src/`.
-- Env: `import.meta.env.VITE_*` tipado en `vite-env.d.ts`. Sin secretos en el frontend.
+- Env: `import.meta.env.VITE_*` tipado en `vite-env.d.ts` (EmailJS). La config web de Firebase es pública: objeto plano en `services/firebase.ts`, sin base64 ni env (el CI no tiene variables). Sin secretos en el frontend.
 
 ## React
 - React 19: sin `forwardRef` (ref como prop), `use()` si aplica. Sin `useEffect` para derivar estado; derivarlo en render.
