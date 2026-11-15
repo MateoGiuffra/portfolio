@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  ActionIcon, Badge, Button, Drawer, Group, Loader, Modal, Paper, Stack, Switch, Text, Title,
+  ActionIcon, Button, Drawer, Group, Loader, Modal, Paper, Stack, Switch, Text, Title,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { GripVertical, Pencil, Plus, Trash2 } from 'lucide-react'
 import { notifications } from '@mantine/notifications'
 import {
   DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors,
@@ -15,9 +16,13 @@ import { listDocs, removeDoc, saveDoc } from '../services/firestoreApi'
 import { LIST_SPECS, buildSeed } from '../services/schema'
 import { content, LINKS, CV_FILES } from '../i18n/content'
 import ItemEditor from './ItemEditor'
+import { navigate } from './router'
+import { useUnsaved } from './Unsaved'
 import { NEW_ITEM, stripMeta, summaryOf, titleOf } from './shape'
 
-const fail = (title, e) => notifications.show({ color: 'red', title, message: e?.message || String(e) })
+const ICON = { size: 16, strokeWidth: 1.5, 'aria-hidden': true }
+
+const fail = (title, e) => notifications.show({ color: 'negative', title, message: e?.message || String(e) })
 
 function Row({ item, title, onToggle, onEdit, onDelete }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: item.id })
@@ -31,31 +36,43 @@ function Row({ item, title, onToggle, onEdit, onDelete }) {
         <ActionIcon
           ref={setActivatorNodeRef} variant="subtle" color="gray" aria-label="Arrastrar para reordenar" title="Arrastrar para reordenar"
           style={{ cursor: 'grab', touchAction: 'none' }} {...attributes} {...listeners}
-        >⠿</ActionIcon>
+        ><GripVertical {...ICON} /></ActionIcon>
         <div style={{ flex: 1, minWidth: 0, opacity: hidden ? 0.5 : 1 }}>
           <Group gap="xs" wrap="nowrap">
-            <Text fw={600} truncate>{title}</Text>
-            {hidden && <Badge size="xs" color="gray">Oculto</Badge>}
+            <Text fw={500} truncate>{title}</Text>
+            {hidden && <span className="bo-meta">Oculto</span>}
           </Group>
           <Text size="xs" c="dimmed" truncate>{summaryOf(item)}</Text>
         </div>
         <Switch checked={!hidden} onChange={() => onToggle(item)} aria-label="Visible en la web" title="Visible en la web" />
-        <ActionIcon variant="subtle" aria-label="Editar" title="Editar" onClick={() => onEdit(item)}>✎</ActionIcon>
-        <ActionIcon variant="subtle" color="red" aria-label="Borrar" title="Borrar" onClick={() => onDelete(item)}>🗑</ActionIcon>
+        <ActionIcon variant="subtle" color="gray" aria-label="Editar" title="Editar" onClick={() => onEdit(item)}><Pencil {...ICON} /></ActionIcon>
+        <ActionIcon variant="subtle" color="negative" aria-label="Borrar" title="Borrar" onClick={() => onDelete(item)}><Trash2 {...ICON} /></ActionIcon>
       </Group>
     </Paper>
   )
 }
 
-export default function ListPage({ name }) {
+export default function ListPage({ name, slug, itemId }) {
   const spec = LIST_SPECS[name]
   const [items, setItems] = useState(null)
   const [error, setError] = useState('')
-  const [editing, setEditing] = useState(null) // elemento abierto en el Drawer (sin id = nuevo)
   const [deleting, setDeleting] = useState(null)
   const [busy, setBusy] = useState(false)
-  const dirtyRef = useRef(false)
+  const { guard } = useUnsaved()
   const mobile = useMediaQuery('(max-width: 48em)')
+
+  const listUrl = `/${slug}`
+  // El elemento abierto en el Drawer sale de la URL: /<lista>/<id> edita, /<lista>/nuevo crea.
+  const draft = useMemo(
+    () => (itemId === 'nuevo' && items ? { ...NEW_ITEM[name](items.length), order: items.length, visible: true } : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [itemId, name, items === null],
+  )
+  const editing = itemId === 'nuevo' ? draft : (items?.find((x) => x.id === itemId) ?? null)
+  // Una URL con un id que no existe vuelve a la lista.
+  useEffect(() => {
+    if (itemId && itemId !== 'nuevo' && items && !items.some((x) => x.id === itemId)) navigate(listUrl, { replace: true })
+  }, [itemId, items, listUrl])
 
   const load = useCallback(() => listDocs(name).then(setItems).catch((e) => setError(e.message)), [name])
   useEffect(() => { load() }, [load])
@@ -97,9 +114,8 @@ export default function ListPage({ name }) {
   const save = async (id, data) => {
     const savedId = await saveDoc(name, id, data)
     setItems((list) => (id ? list.map((x) => (x.id === id ? { id, ...data } : x)) : [...list, { id: savedId, ...data }]))
-    notifications.show({ color: 'green', message: 'Guardado' })
-    dirtyRef.current = false
-    setEditing(null)
+    notifications.show({ color: 'positive', message: 'Guardado' })
+    navigate(listUrl, { replace: true })
   }
 
   const remove = async () => {
@@ -108,7 +124,7 @@ export default function ListPage({ name }) {
     try {
       await removeDoc(name, it.id)
       setItems((list) => list.filter((x) => x.id !== it.id))
-      notifications.show({ color: 'green', message: `Borrado: ${titleOf(name, it)}` })
+      notifications.show({ color: 'positive', message: `Borrado: ${titleOf(name, it)}` })
       setDeleting(null)
     } catch (e) {
       fail('No se pudo borrar', e)
@@ -122,7 +138,7 @@ export default function ListPage({ name }) {
     try {
       for (const { id, data } of buildSeed(content, LINKS, CV_FILES)[name]) await saveDoc(name, id, data)
       await load()
-      notifications.show({ color: 'green', message: 'Importado' })
+      notifications.show({ color: 'positive', message: 'Importado' })
     } catch (e) {
       fail('No se pudo importar', e)
     } finally {
@@ -130,27 +146,22 @@ export default function ListPage({ name }) {
     }
   }
 
-  const newItem = () => setEditing({ ...NEW_ITEM[name](items?.length || 0), order: items?.length || 0, visible: true })
-  const requestClose = () => {
-    if (dirtyRef.current && !window.confirm('Tenés cambios sin guardar. ¿Descartarlos?')) return
-    dirtyRef.current = false
-    setEditing(null)
-  }
-  const onDirty = useCallback((d) => { dirtyRef.current = d }, [])
+  const newItem = () => navigate(`${listUrl}/nuevo`)
+  const requestClose = () => guard(() => navigate(listUrl))
 
   return (
     <Stack>
       <Group justify="space-between">
         <Title order={3}>{spec.label}</Title>
-        <Button onClick={newItem} disabled={items === null}>+ Nuevo</Button>
+        <Button onClick={newItem} disabled={items === null} leftSection={<Plus {...ICON} />}>Nuevo</Button>
       </Group>
 
-      {error && <Text c="red">{error}</Text>}
+      {error && <Text c="negative">{error}</Text>}
       {items === null && !error && <Loader size="sm" />}
       {items?.length === 0 && (
         <Paper withBorder p="xl">
           <Stack align="flex-start">
-            <Text c="dimmed">Todavía no hay nada acá.</Text>
+            <Text c="dimmed">Todavía no hay nada acá</Text>
             <Button variant="default" loading={busy} onClick={importStatic}>Importar lo que hoy está en el código</Button>
           </Stack>
         </Paper>
@@ -160,7 +171,7 @@ export default function ListPage({ name }) {
           <SortableContext items={items.map((i) => i.id)} strategy={verticalListSortingStrategy}>
             <Stack gap="xs">
               {items.map((it) => (
-                <Row key={it.id} item={it} title={titleOf(name, it)} onToggle={toggle} onEdit={setEditing} onDelete={setDeleting} />
+                <Row key={it.id} item={it} title={titleOf(name, it)} onToggle={toggle} onEdit={(it) => navigate(`${listUrl}/${it.id}`)} onDelete={setDeleting} />
               ))}
             </Stack>
           </SortableContext>
@@ -173,7 +184,7 @@ export default function ListPage({ name }) {
       >
         {editing && (
           <ItemEditor
-            key={editing.id || 'new'} name={name} item={editing} onSave={save} onCancel={requestClose} onDirty={onDirty}
+            key={editing.id || 'new'} name={name} item={editing} onSave={save} onCancel={requestClose}
           />
         )}
       </Drawer>
@@ -183,7 +194,7 @@ export default function ListPage({ name }) {
           <Text>¿Borrar &quot;{deleting && titleOf(name, deleting)}&quot;? No se puede deshacer.</Text>
           <Group justify="flex-end">
             <Button variant="default" onClick={() => setDeleting(null)}>Cancelar</Button>
-            <Button color="red" loading={busy} onClick={remove}>Borrar</Button>
+            <Button color="negative" loading={busy} onClick={remove}>Borrar</Button>
           </Group>
         </Stack>
       </Modal>

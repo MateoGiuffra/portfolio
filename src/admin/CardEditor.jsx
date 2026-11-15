@@ -42,10 +42,8 @@ export default function CardEditor({ item, onChange }) {
             <UnstyledButton
               key={bg + accent} title={`${bg} / ${accent}`} aria-label={`Paleta ${bg} ${accent}`}
               onClick={() => set({ bg, fg, accent })}
-              style={{
-                width: 28, height: 28, borderRadius: '50%', border: "2px solid rgba(255,255,255,.45)",
-                background: `linear-gradient(135deg, ${accent} 50%, ${bg} 50%)`,
-              }}
+              className="bo-swatch"
+              style={{ background: `linear-gradient(135deg, ${accent} 50%, ${bg} 50%)` }}
             />
           ))}
         </Group>

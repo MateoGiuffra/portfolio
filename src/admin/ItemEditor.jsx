@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Group, NumberInput, Stack, Switch, TagsInput, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { LIST_SPECS } from '../services/schema'
 import CardEditor from './CardEditor'
 import LangSwitch from './LangSwitch'
+import { useReportDirty } from './Unsaved'
 import { Localized, Tree } from './Tree'
 import {
   FIELD_META, PRIMARY, copyAllFromEs, labelOf, missingCount, photosRule, requiredEs, stripMeta, urlRule,
@@ -32,7 +33,7 @@ function Shared({ name, form }) {
     // TODO(cloudinary): reemplazar por subida de archivos (upload widget) y guardar las URLs resultantes acá.
     return (
       <TagsInput
-        label={label} description="URLs de imágenes. La subida de archivos con Cloudinary viene después."
+        label={label} description="URLs de imágenes (la subida con Cloudinary viene después)"
         placeholder="Pegá una URL y apretá Enter" splitChars={[' ']} clearable value={value ?? []} error={error} onChange={set}
       />
     )
@@ -44,7 +45,7 @@ function Shared({ name, form }) {
 }
 
 // Formulario de un elemento de lista (un solo formulario; el idioma activo se elige arriba).
-export default function ItemEditor({ name, item, onSave, onCancel, onDirty }) {
+export default function ItemEditor({ name, item, onSave, onCancel }) {
   const spec = LIST_SPECS[name]
   const { id } = item
   const [lang, setLang] = useState('es')
@@ -56,7 +57,7 @@ export default function ItemEditor({ name, item, onSave, onCancel, onDirty }) {
   }
   const form = useForm({ mode: 'controlled', initialValues: stripMeta(item), validate })
   const dirty = form.isDirty()
-  useEffect(() => { onDirty(dirty) }, [dirty, onDirty])
+  useReportDirty(dirty)
 
   const localized = Object.fromEntries(spec.localized.map((k) => [k, form.values[k]]))
   const missing = { es: missingCount(localized, 'es'), en: missingCount(localized, 'en') }
@@ -67,12 +68,12 @@ export default function ItemEditor({ name, item, onSave, onCancel, onDirty }) {
         await onSave(id, { ...values, order: Number(values.order) || 0, visible: values.visible !== false })
         form.resetDirty()
       } catch (e) {
-        notifications.show({ color: 'red', title: 'No se pudo guardar', message: e.message })
+        notifications.show({ color: 'negative', title: 'No se pudo guardar', message: e.message })
       }
     },
     () => {
       setLang('es') // el error de "obligatorio" está en ES
-      notifications.show({ color: 'yellow', title: 'Revisá el formulario', message: 'Hay campos con errores.' })
+      notifications.show({ color: 'amber', title: 'Revisá el formulario', message: 'Hay campos con errores' })
     },
   )
 

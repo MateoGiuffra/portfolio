@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>Redirigiendo</title>
+<script>
+  // GitHub Pages no sirve rutas del backoffice (/portfolio/bo/proyectos): se pasa la ruta como hash
+  // y la app la convierte de nuevo a path. Cualquier otra ruta inexistente vuelve a la home.
+  var p = location.pathname
+  var i = p.search(/\/(bo|backoffice)(\/|$)/)
+  if (i >= 0) location.replace(p.slice(0, i) + '/#' + p.slice(i) + location.search)
+  else location.replace('/' + (p.split('/')[1] || '') + '/')
+</script></head><body></body></html>

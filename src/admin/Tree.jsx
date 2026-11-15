@@ -4,7 +4,10 @@ import { useState } from 'react'
 import {
   ActionIcon, Button, Group, NumberInput, Paper, Stack, Switch, TagsInput, Text, TextInput, Textarea,
 } from '@mantine/core'
+import { Plus, X } from 'lucide-react'
 import { LINES, PROTOS, blankLike, isEmpty, isLocalized, labelOf } from './shape'
+
+const ICON = { size: 16, strokeWidth: 1.5, 'aria-hidden': true }
 
 // Una frase por línea. El texto crudo vive en estado local (si no, Enter se "come" las líneas vacías).
 // Para forzar el reinicio desde afuera (p. ej. "copiar desde ES") se cambia la `key`.
@@ -54,14 +57,17 @@ function ListField({ name, label, description, error, value, reference, onChange
               ))}
             </Stack>
             <ActionIcon
-              color="red" variant="subtle" aria-label="Quitar" title="Quitar"
+              color="gray" variant="subtle" aria-label="Quitar" title="Quitar"
               onClick={() => onChange(items.filter((_, j) => j !== i))}
-            >✕</ActionIcon>
+            ><X {...ICON} /></ActionIcon>
           </Group>
         </Paper>
       ))}
-      <Button variant="default" size="xs" style={{ alignSelf: 'flex-start' }} onClick={() => onChange([...items, structuredClone(proto)])}>
-        + Agregar
+      <Button
+        variant="default" size="xs" style={{ alignSelf: 'flex-start' }} leftSection={<Plus size={14} strokeWidth={1.5} aria-hidden />}
+        onClick={() => onChange([...items, structuredClone(proto)])}
+      >
+        Agregar
       </Button>
     </Stack>
   )
@@ -131,7 +137,7 @@ export function Localized({ name, label, value, lang, onChange, error }) {
     <Group gap="xs" component="span" display="inline-flex">
       {text}
       {canCopy && (
-        <Button size="compact-xs" variant="light" onClick={copy}>Copiar desde ES</Button>
+        <Button size="compact-xs" variant="default" onClick={copy}>Copiar desde ES</Button>
       )}
     </Group>
   )

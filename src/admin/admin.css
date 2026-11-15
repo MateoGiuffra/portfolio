@@ -1,4 +1,5 @@
-/* Solo lo que Mantine no cubre. El resto del estilo viene de @mantine/core. */
+/* Solo lo que Mantine no cubre. El resto del estilo viene de @mantine/core y de theme.js. */
+
 .bo-sticky-foot {
   position: sticky;
   bottom: 0;
@@ -8,4 +9,149 @@
   background: var(--mantine-color-dark-7);
   border-top: 1px solid var(--mantine-color-dark-4);
 }
-.bo-dirty { color: var(--mantine-color-yellow-5); font-size: 13px; margin-right: auto; }
+
+.bo-dirty {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--mantine-color-dimmed);
+}
+
+.bo-dirty::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mantine-color-amber-5);
+}
+
+/* Barra lateral: más profunda que la página, filas de 36px con 2px entre ellas. */
+.bo-nav {
+  background: var(--mantine-color-dark-8);
+  gap: 2px;
+}
+
+.bo-nav .mantine-NavLink-root {
+  min-height: 36px;
+  padding-block: 4px;
+  color: var(--mantine-color-dark-2);
+  transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bo-nav .mantine-NavLink-root:hover {
+  color: var(--mantine-color-dark-0);
+}
+
+/* Activo: un escalón de superficie con línea fina arriba, sin color de acento en el fondo. */
+.bo-nav .mantine-NavLink-root[data-active] {
+  background: var(--mantine-color-dark-6);
+  color: var(--mantine-color-dark-0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.bo-nav .mantine-NavLink-root[data-active] .mantine-NavLink-section {
+  color: var(--mantine-color-amber-5);
+}
+
+.bo-nav .mantine-NavLink-section {
+  color: var(--mantine-color-dark-3);
+}
+
+.bo-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Filas navegables (lista de secciones). */
+.bo-link-row {
+  display: block;
+  width: 100%;
+}
+
+.bo-link-row .mantine-Paper-root {
+  transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bo-link-row:hover .mantine-Paper-root {
+  background: var(--mantine-color-dark-5);
+  border-color: var(--mantine-color-dark-5);
+}
+
+/* Meta y estados: texto mono apagado en vez de píldoras de color. */
+.bo-meta {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--mantine-color-dimmed);
+}
+
+/* Firma: marca de idioma ES/EN en mono; un punto indica que faltan traducciones. */
+.bo-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.bo-lang-miss {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--mantine-color-dimmed);
+}
+
+.bo-lang-miss::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mantine-color-amber-5);
+}
+
+/* Pesos: 400/500, nunca 600. */
+.mantine-Button-label,
+.mantine-Drawer-title,
+.mantine-Modal-title,
+.mantine-SegmentedControl-label {
+  font-weight: 500;
+}
+
+/* Foco visible en la paleta del BO. */
+.bo-nav .mantine-NavLink-root:focus-visible,
+.bo-link-row:focus-visible {
+  outline: 2px solid var(--mantine-color-amber-5);
+  outline-offset: 2px;
+}
+
+.bo-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  transition: border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bo-swatch:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Botón de cuenta: ícono, nombre y flecha sobre una misma línea. */
+.mantine-Button-section svg {
+  display: block;
+}
+
+.bo-account-name {
+  font-size: 14px;
+  line-height: 1;
+}
+
+@media (max-width: 48em) {
+  .bo-account-name {
+    display: none;
+  }
+}

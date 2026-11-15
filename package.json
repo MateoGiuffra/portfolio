@@ -27,6 +27,7 @@
     "@mantine/hooks": "^9.8.0",
     "@mantine/notifications": "^9.8.0",
     "firebase": "^13.3.0",
+    "lucide-react": "^1.73.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2"

@@ -3,15 +3,13 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import ContentProvider from './services/ContentProvider.jsx'
+import { isAdminPath, migrateHashRoute } from './admin/router.js'
 
 const Admin = lazy(() => import('./admin/Admin.jsx'))
 
-// Backoffice: /bo o /backoffice (en GitHub Pages redirigen a #/bo).
-const isAdminRoute = () => {
-  const hash = window.location.hash.replace(/\/$/, '')
-  const path = window.location.pathname.replace(/\/$/, '')
-  return /^#\/(bo|backoffice)$/.test(hash) || /\/(bo|backoffice)$/.test(path)
-}
+// Backoffice: rutas por path bajo /bo (router en src/admin/router.js). Los links viejos con #/bo se convierten.
+migrateHashRoute()
+const isAdminRoute = () => isAdminPath()
 
 function Root() {
   const [admin, setAdmin] = useState(isAdminRoute)
@@ -25,8 +23,8 @@ function Root() {
       wasAdmin.current = now
       setAdmin(now)
     }
-    window.addEventListener('hashchange', on)
-    return () => window.removeEventListener('hashchange', on)
+    window.addEventListener('popstate', on)
+    return () => window.removeEventListener('popstate', on)
   }, [])
   return admin ? (
     <Suspense fallback={null}>
