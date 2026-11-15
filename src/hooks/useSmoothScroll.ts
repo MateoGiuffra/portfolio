@@ -23,8 +23,16 @@ interface Inertia {
   onWheel: (e: WheelEvent) => void
   sync: () => void
   snapTo: (y: number) => void
+  // Va a `y` con la misma inercia; ignora la rueda residual un instante (touchpad).
+  glideTo: (y: number) => void
   dispose: () => void
 }
+
+// Tras un salto a un ancla se ignora la rueda este tiempo: la inercia residual del touchpad
+// cancelaba el scroll nativo hacia el ancla y lo dejaba a mitad de camino.
+const ANCHOR_WHEEL_LOCK_MS = 700
+// ...y este tiempo extra una vez que el desplazamiento al ancla terminó.
+const ANCHOR_WHEEL_TAIL_MS = 400
 
 // Rueda con inercia (lerp hacia el destino).
 const createInertia = (): Inertia => {
@@ -32,12 +40,24 @@ const createInertia = (): Inertia => {
   let current = window.scrollY
   let raf = 0
   let running = false
+  let wheelLockUntil = 0
+  let gliding = false // yendo a un ancla: la rueda no lo interrumpe
+
+  const start = (): void => {
+    if (running) return
+    running = true
+    raf = requestAnimationFrame(tick)
+  }
 
   const tick = (): void => {
     current += (target - current) * 0.1
     if (Math.abs(target - current) < 0.5) {
       current = target
       running = false
+      if (gliding) {
+        gliding = false
+        wheelLockUntil = Math.max(wheelLockUntil, performance.now() + ANCHOR_WHEEL_TAIL_MS)
+      }
     }
     jump(current)
     if (running) raf = requestAnimationFrame(tick)
@@ -47,12 +67,17 @@ const createInertia = (): Inertia => {
     onWheel(e) {
       if (e.ctrlKey || e.defaultPrevented) return
       e.preventDefault()
+      if (gliding || performance.now() < wheelLockUntil) return
       if (!running) current = window.scrollY
       target = clamp(target + e.deltaY, 0, maxScroll())
-      if (!running) {
-        running = true
-        raf = requestAnimationFrame(tick)
-      }
+      start()
+    },
+    glideTo(y) {
+      gliding = true
+      wheelLockUntil = performance.now() + ANCHOR_WHEEL_LOCK_MS
+      if (!running) current = window.scrollY
+      target = clamp(y, 0, maxScroll())
+      start()
     },
     // Si se scrollea por otro medio (teclado, anclas, arrastre), resincronizar.
     sync() {
@@ -63,6 +88,7 @@ const createInertia = (): Inertia => {
     },
     // Salto directo (arrastre de la barra): corta la inercia en curso.
     snapTo(y) {
+      gliding = false
       running = false
       cancelAnimationFrame(raf)
       target = current = y
@@ -140,6 +166,23 @@ const attachDrag = (
   }
 }
 
+// Links internos (#seccion): van al ancla con la inercia del scroll, respetando scroll-padding-top.
+// Se enganchan en window (los links de la web son <a href="#id"> comunes).
+const createAnchorClick = (glideTo: (y: number) => void) => (e: MouseEvent): void => {
+  if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+  const link = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null
+  const hash = link?.getAttribute('href')
+  if (!hash || hash.length < 2) return
+  const id = decodeURIComponent(hash.slice(1))
+  const el = document.getElementById(id)
+  if (!el) return
+  e.preventDefault()
+  const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0
+  glideTo(el.getBoundingClientRect().top + window.scrollY - pad)
+  // Igual que el ancla nativa: cambia el hash y suma una entrada al historial.
+  if (window.location.hash !== hash) window.history.pushState(null, '', hash)
+}
+
 // Réplica del scroll de lusion.co: rueda con inercia + indicador custom a la derecha.
 export function useSmoothScroll({ track, bar }: SmoothScrollRefs): void {
   useEffect(() => {
@@ -157,7 +200,11 @@ export function useSmoothScroll({ track, bar }: SmoothScrollRefs): void {
       paint()
     }
 
-    if (!reduce && fine) window.addEventListener('wheel', inertia.onWheel, { passive: false })
+    const onAnchorClick = createAnchorClick(inertia.glideTo)
+    if (!reduce && fine) {
+      window.addEventListener('wheel', inertia.onWheel, { passive: false })
+      document.addEventListener('click', onAnchorClick)
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', paint)
     const ro = new ResizeObserver(paint)
@@ -167,6 +214,7 @@ export function useSmoothScroll({ track, bar }: SmoothScrollRefs): void {
     return () => {
       inertia.dispose()
       window.removeEventListener('wheel', inertia.onWheel)
+      document.removeEventListener('click', onAnchorClick)
       detachDrag()
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', paint)
